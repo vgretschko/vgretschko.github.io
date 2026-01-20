@@ -261,6 +261,17 @@ main {
   border-radius: 1.25rem;
 }
 
+.cv-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.section-footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
