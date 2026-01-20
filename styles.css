@@ -384,8 +384,19 @@ main {
 @media (max-width: 768px) {
   .profile {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 1rem;
+    text-align: center;
+  }
+
+  .profile-photo {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+  }
+
+  .profile-info {
+    text-align: center;
   }
 
   .profile-info h1 {
@@ -394,6 +405,11 @@ main {
 
   .nav {
     gap: 1rem;
+    justify-content: center;
+  }
+
+  .consulting-tagline {
+    text-align: center;
   }
 
   .section.alt {
