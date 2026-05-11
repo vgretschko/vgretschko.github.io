@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI for Economic Research | Resource Guide</title>
+    <meta
+      name="description"
+      content="Curated resources on using generative AI, coding agents, and automated research workflows in economics."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">AI</span>
+        <div>
+          <h1>AI for Economic Research</h1>
+          <p>Curated readings, tools, and workflows for researchers who want useful signal fast.</p>
+        </div>
+      </div>
+      <a class="source-link" href="https://github.com/" target="_blank" rel="noreferrer">GitHub Pages</a>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div class="intro-copy">
+          <p class="eyebrow">Presentation resource hub</p>
+          <h2>Find the right AI resource for your next research task.</h2>
+          <p>
+            Start with the beginner path if you are trying AI tools for the first time, or filter by topic
+            when you need papers, code starters, peer-review tools, or arguments about where research is going.
+          </p>
+        </div>
+        <img
+          src="https://cdn.mathpix.com/cropped/33cce015-7e7f-4de9-a1ed-a609047fe2b7-15.jpg?height=940&width=1625&top_left_y=300&top_left_x=247"
+          alt="Chart from an AI-generated policy evaluation paper"
+        >
+      </section>
+
+      <section class="paths" aria-label="Recommended paths">
+        <button class="path" type="button" data-path="beginner">
+          <span>01</span>
+          <strong>New to AI research tools</strong>
+          <small>Guides, overviews, and low-friction first experiments.</small>
+        </button>
+        <button class="path" type="button" data-path="empirical">
+          <span>02</span>
+          <strong>Empirical economist</strong>
+          <small>Coding agents, causal workflows, paper review, and data tasks.</small>
+        </button>
+        <button class="path" type="button" data-path="advanced">
+          <span>03</span>
+          <strong>Advanced debate</strong>
+          <small>Automated papers, proof systems, publishing incentives, and quality control.</small>
+        </button>
+      </section>
+
+      <section class="controls" aria-label="Resource filters">
+        <label class="search">
+          <span>Search</span>
+          <input id="search" type="search" placeholder="Search titles, authors, tags, summaries...">
+        </label>
+        <label>
+          <span>Topic</span>
+          <select id="topic"></select>
+        </label>
+        <label>
+          <span>Level</span>
+          <select id="level"></select>
+        </label>
+        <label>
+          <span>Type</span>
+          <select id="type"></select>
+        </label>
+      </section>
+
+      <section class="meta-row">
+        <p id="result-count"></p>
+        <button id="clear" type="button">Clear filters</button>
+      </section>
+
+      <section id="resources" class="resource-grid" aria-live="polite"></section>
+    </main>
+
+    <footer>
+      <p>
+        Links point to original public sources where available, not to locally supplied PDFs.
+        Curated for a presentation on the usefulness of AI in economic research.
+      </p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
