@@ -156,6 +156,18 @@ const resources = [
     tags: ["Claude", "academic workflow", "skills"]
   },
   {
+    title: "CGPT Codex Skills",
+    author: "P. V. Sundar Balakrishnan",
+    url: "https://github.com/pvsundar/CGPT-CODEX-SKILLS",
+    topic: "Code and Agents",
+    level: "Advanced",
+    type: "Code starter",
+    audience: "Academic Codex users",
+    summary: "A public collection of reusable Codex skills for academic writing, review, presentation, auditing, and software workflows.",
+    useful: "Good source for participants who want to turn recurring research tasks into reusable agent skills.",
+    tags: ["Codex skills", "academic workflow", "automation"]
+  },
+  {
     title: "Research Project Flow",
     author: "Black JL",
     url: "https://black-jl.github.io/Research-Project-Flow/",
@@ -470,7 +482,7 @@ const resources = [
   {
     title: "coarse.ink",
     author: "David Van Dijcke",
-    url: "https://openaireview.org/",
+    url: "https://coarse.ink/",
     topic: "Review and Quality",
     level: "Beginner",
     type: "Tool",
@@ -478,6 +490,18 @@ const resources = [
     summary: "A free AI academic paper-review interface surfaced in the recent AI research debate.",
     useful: "Good practical tool for participants who want immediate feedback on a draft.",
     tags: ["paper review", "academic writing", "tool"]
+  },
+  {
+    title: "Reviewer",
+    author: "Ingar30",
+    url: "https://github.com/Ingar30/reviewer",
+    topic: "Review and Quality",
+    level: "Advanced",
+    type: "Code starter",
+    audience: "Economists and reviewers",
+    summary: "A reproducible multi-agent reviewer for academic economics papers, with preprocessing, reviewer prompts, validation, normalization, and editor report assembly.",
+    useful: "Best for people who want a local, inspectable paper-review pipeline rather than a hosted review tool.",
+    tags: ["paper review", "multi-agent", "economics"]
   },
   {
     title: "Crossref Reference Checker",
@@ -622,6 +646,30 @@ const resources = [
     summary: "A tool for discovering and tracking economics papers.",
     useful: "Good for combining AI-assisted reading with paper discovery.",
     tags: ["papers", "discovery", "economics"]
+  },
+  {
+    title: "Resources for Economists and AI Users",
+    author: "Claes Backman",
+    url: "https://claesbackman.com/resources.html",
+    topic: "Resource Lists",
+    level: "Beginner",
+    type: "Resource list",
+    audience: "Economists and PhD students",
+    summary: "A broad economics research resource page with sections on AI, Claude Code, coding-agent workflows, writing, publishing, refereeing, and data visualization.",
+    useful: "A strong second-stop resource after this page because it mixes AI-specific links with classic research craft advice.",
+    tags: ["resource list", "economics", "Claude Code"]
+  },
+  {
+    title: "Inducing Sustained Creativity and Diversity in Large Language Models",
+    author: "Queenie Luo, Gary King, Michael Puett, Michael D. Smith",
+    url: "https://arxiv.org/abs/2603.19519",
+    topic: "Economic Papers",
+    level: "Advanced",
+    type: "Paper",
+    audience: "Researchers using LLMs for exploration",
+    summary: "An arXiv paper proposing a decoding scheme for keeping LLM outputs diverse and creative across long exploratory search tasks.",
+    useful: "Useful for research ideation workflows where the goal is to explore many non-obvious alternatives rather than get one conventional answer.",
+    tags: ["creativity", "exploratory search", "LLMs"]
   },
   {
     title: "AI Academy: Unstructured to Structured Data",
