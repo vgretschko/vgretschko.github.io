@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vgretschko.github.io/sitemap.xml

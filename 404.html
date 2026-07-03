@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 — Off the Equilibrium Path | Vitali Gretschko</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add("js");
+      var t = null;
+      try { t = localStorage.getItem("vg-theme"); } catch (e) { }
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      d.setAttribute("data-theme", t);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <main class="notfound">
+    <div class="notfound-code">404</div>
+    <h1>You are off the equilibrium path.</h1>
+    <p>No rational player would ever reach this node — yet here we are. Beliefs at this information set are
+      unrestricted, so feel free to believe the page you wanted is one click away.</p>
+    <a class="btn primary" href="/">Back-induct to the homepage</a>
+  </main>
+</body>
+
+</html>
