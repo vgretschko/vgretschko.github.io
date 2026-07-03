@@ -141,13 +141,137 @@
         </figure>
       </div>
 
-      <div class="hero-sim">
-        <div class="sim-caption">
-          <span class="sim-dot" aria-hidden="true"></span>
-          <span id="sim-status">Live: ascending clock auction — the price rises until one bidder remains</span>
-          <button id="sim-replay" class="sim-replay" type="button">redraw values ↻</button>
+      <div class="hero-blurbs" id="blurbs">
+        <div class="blurb-head">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span class="blurb-label">Endorsements from beyond the grave — fictional, but accurate about the
+            papers</span>
+          <div class="blurb-nav">
+            <button id="blurb-prev" class="blurb-btn" type="button" aria-label="Previous endorsement">←</button>
+            <span class="blurb-count" id="blurb-count" aria-hidden="true">1/10</span>
+            <button id="blurb-next" class="blurb-btn" type="button" aria-label="Next endorsement">→</button>
+          </div>
         </div>
-        <canvas id="auction-canvas" aria-label="Animated simulation of an ascending clock auction"></canvas>
+        <div class="blurb-stage" id="blurb-stage" aria-live="polite">
+
+          <figure class="blurb active">
+            <blockquote>“I doubled the size of a nation in a private negotiation and told Congress afterwards.
+              Gretschko &amp; Wambach explain precisely why it worked: shielded from public scrutiny, a negotiator can
+              strike the deal of the millennium. Their advice for everyone who <em>is</em> being watched: hold an
+              auction.”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Thomas Jefferson</span>
+              <span class="blurb-bio">1743–1826 · third President of the United States, buyer of Louisiana</span>
+              <a class="blurb-paper" href="#pub-rand2016">on “Procurement under Public Scrutiny” · RAND 2016 →</a>
+            </figcaption>
+          </figure>
+
+          <figure class="blurb">
+            <blockquote>“Monsieur Jefferson believes he won? I kept his men <em>talking</em> until the price suited
+              me. The experiment of Fugger, Gillen, Gretschko, Kokott &amp; Riehm confirms my method: communication
+              raises procurement prices — even when the buyers are seasoned professionals. Sellers, always insist on a
+              chat.”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Napoleon Bonaparte</span>
+              <span class="blurb-bio">1769–1821 · Emperor of the French, seller of Louisiana</span>
+              <a class="blurb-paper" href="#pub-avn">on “Auctions vs. Negotiations: The Role of Communication” →</a>
+            </figcaption>
+          </figure>
+
+          <figure class="blurb">
+            <blockquote>“Six marriage contracts, and not one of them stable under renegotiation. Had I read Gretschko
+              &amp; Wambach on designing outcomes that no renegotiation can overturn, England might have been spared a
+              schism — and two of my queens their heads.”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Henry VIII</span>
+              <span class="blurb-bio">1491–1547 · King of England, serial renegotiator</span>
+              <a class="blurb-paper" href="#pub-stable">on “Stable Contracts under Renegotiation” · R&amp;R, JPE →</a>
+            </figcaption>
+          </figure>
+
+          <figure class="blurb">
+            <blockquote>“Know your enemy, I wrote. But when you cannot even know what your enemy <em>believes</em>,
+              bid as Gretschko &amp; Mass instruct: plan against the worst-case belief and you cannot be ambushed. The
+              supreme art of bidding is surviving your own ignorance.”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Sun Tzu</span>
+              <span class="blurb-bio">c. 544–496 BC · general, author of The Art of War</span>
+              <a class="blurb-paper" href="#pub-te2024">on “Worst-Case Belief Equilibria” · Theoretical Economics 2024
+                →</a>
+            </figcaption>
+          </figure>
+
+          <figure class="blurb">
+            <blockquote>“I studied birds for twenty years and finished four paintings. Gretschko &amp; Rajko proved in
+              the laboratory what my patrons always suspected: people acquire far more information than could ever pay
+              off. Their bidders paid to know things of no use to them. I felt seen.”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Leonardo da Vinci</span>
+              <span class="blurb-bio">1452–1519 · polymath, notorious over-researcher</span>
+              <a class="blurb-paper" href="#pub-ee2015">on “Excess Information Acquisition in Auctions” · Exp. Econ.
+                2015 →</a>
+            </figcaption>
+          </figure>
+
+          <figure class="blurb">
+            <blockquote>“All my life they whispered that the Emperor favored Mozart. Under imitation perfection — the
+              simple rule of Fugger, Gretschko, Mass &amp; Wambach — anyone may copy the favorite’s offer and must be
+              treated exactly the same. Where was this mechanism in 1781?”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Antonio Salieri</span>
+              <span class="blurb-bio">1750–1825 · imperial court composer, allegedly overlooked</span>
+              <a class="blurb-paper" href="#pub-aej2020">on “Imitation Perfection” · AEJ: Microeconomics 2020 →</a>
+            </figcaption>
+          </figure>
+
+          <figure class="blurb">
+            <blockquote>“Four years on my back painting a ceiling for a Pope who paid when it pleased him. Gretschko
+              &amp; Pollrich design multi-period procurement that survives exactly such incomplete contracts. Had
+              Julius II committed to their mechanism, I might have painted him a second one.”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Michelangelo</span>
+              <span class="blurb-bio">1475–1564 · sculptor, reluctant ceiling contractor</span>
+              <a class="blurb-paper" href="#pub-ms2022">on “Multi-Period Procurement” · Management Science 2022 →</a>
+            </figcaption>
+          </figure>
+
+          <figure class="blurb">
+            <blockquote>“They named the megahertz after me, then sold it for billions. The autopsy of Germany’s 2015
+              auction by Bichler, Gretschko &amp; Janssen taught me how bidders bargain with one another using nothing
+              but their bids. Wireless telegraphy indeed.”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Heinrich Hertz</span>
+              <span class="blurb-bio">1857–1894 · physicist, unit of frequency</span>
+              <a class="blurb-paper" href="#pub-tp2017">on “Bargaining in Spectrum Auctions” · Telecom. Policy 2017
+                →</a>
+            </figcaption>
+          </figure>
+
+          <figure class="blurb">
+            <blockquote>“In my country they sell flowers by a falling clock — no time to think, only to stop it.
+              Gretschko &amp; Wambach ask when a bidder in a descending auction should pause and learn what the lot is
+              truly worth to her. I sold one painting in my lifetime. Clearly, I stopped too seldom.”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Vincent van Gogh</span>
+              <span class="blurb-bio">1853–1890 · painter, posthumous market phenomenon</span>
+              <a class="blurb-paper" href="#pub-et2014">on “Information Acquisition during a Descending Auction” ·
+                Econ. Theory 2014 →</a>
+            </figcaption>
+          </figure>
+
+          <figure class="blurb">
+            <blockquote>“Athens ruled that my teaching had externalities and sanctioned me accordingly. Fugger,
+              Gillen, Gretschko, Riehm &amp; Werner measure, in the field, when social norms and sanctions truly keep
+              people out of markets their neighbors despise. The hemlock, I maintain, was disproportionate.”</blockquote>
+            <figcaption>
+              <span class="blurb-who">Socrates</span>
+              <span class="blurb-bio">470–399 BC · philosopher, sanctioned by popular vote</span>
+              <a class="blurb-paper" href="#pub-jpube2022">on “Social Norms, Sanctions, and Conditional Entry” · J.
+                Public Econ. 2022 →</a>
+            </figcaption>
+          </figure>
+
+        </div>
       </div>
     </section>
 
@@ -296,7 +420,7 @@
       <div class="pub-list" id="pub-list">
 
         <!-- Journal articles -->
-        <article class="pub reveal" data-kind="journal">
+        <article id="pub-te2024" class="pub reveal" data-kind="journal">
           <div class="pub-year" aria-hidden="true">2024</div>
           <div class="pub-main">
             <h4 class="pub-title">Worst-Case Belief Equilibria in First-Price Auctions</h4>
@@ -310,7 +434,7 @@
           </div>
         </article>
 
-        <article class="pub reveal" data-kind="journal">
+        <article id="pub-jpube2022" class="pub reveal" data-kind="journal">
           <div class="pub-year" aria-hidden="true">2022</div>
           <div class="pub-main">
             <h4 class="pub-title">Social Norms, Sanctions, and Conditional Entry in Markets with Externalities</h4>
@@ -324,7 +448,7 @@
           </div>
         </article>
 
-        <article class="pub reveal" data-kind="journal">
+        <article id="pub-ms2022" class="pub reveal" data-kind="journal">
           <div class="pub-year" aria-hidden="true">2022</div>
           <div class="pub-main">
             <h4 class="pub-title">Multi-Period Procurement with Incomplete Contracts</h4>
@@ -350,7 +474,7 @@
           </div>
         </article>
 
-        <article class="pub reveal" data-kind="journal">
+        <article id="pub-aej2020" class="pub reveal" data-kind="journal">
           <div class="pub-year" aria-hidden="true">2020</div>
           <div class="pub-main">
             <h4 class="pub-title">Imitation Perfection — A Simple Rule to Prevent Discrimination in Procurement</h4>
@@ -376,7 +500,7 @@
           </div>
         </article>
 
-        <article class="pub reveal" data-kind="journal">
+        <article id="pub-tp2017" class="pub reveal" data-kind="journal">
           <div class="pub-year" aria-hidden="true">2017</div>
           <div class="pub-main">
             <h4 class="pub-title">Bargaining in Spectrum Auctions: A Review of the German 2015 LTE Auction</h4>
@@ -400,7 +524,7 @@
           </div>
         </article>
 
-        <article class="pub reveal" data-kind="journal">
+        <article id="pub-rand2016" class="pub reveal" data-kind="journal">
           <div class="pub-year" aria-hidden="true">2016</div>
           <div class="pub-main">
             <h4 class="pub-title">Procurement under Public Scrutiny: Auctions vs. Negotiations</h4>
@@ -413,7 +537,7 @@
           </div>
         </article>
 
-        <article class="pub reveal" data-kind="journal">
+        <article id="pub-ee2015" class="pub reveal" data-kind="journal">
           <div class="pub-year" aria-hidden="true">2015</div>
           <div class="pub-main">
             <h4 class="pub-title">Excess Information Acquisition in Auctions</h4>
@@ -426,7 +550,7 @@
           </div>
         </article>
 
-        <article class="pub reveal" data-kind="journal">
+        <article id="pub-et2014" class="pub reveal" data-kind="journal">
           <div class="pub-year" aria-hidden="true">2014</div>
           <div class="pub-main">
             <h4 class="pub-title">Information Acquisition during a Descending Auction</h4>
@@ -451,7 +575,7 @@
         </article>
 
         <!-- Working papers -->
-        <article class="pub reveal" data-kind="working">
+        <article id="pub-stable" class="pub reveal" data-kind="working">
           <div class="pub-year" aria-hidden="true">R&amp;R</div>
           <div class="pub-main">
             <h4 class="pub-title">Stable Contracts under Renegotiation</h4>
@@ -477,7 +601,7 @@
           </div>
         </article>
 
-        <article class="pub reveal" data-kind="working">
+        <article id="pub-avn" class="pub reveal" data-kind="working">
           <div class="pub-year" aria-hidden="true">WP</div>
           <div class="pub-main">
             <h4 class="pub-title">Auctions vs. Negotiations: The Role of Communication in an Experiment with

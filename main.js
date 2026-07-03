@@ -1,5 +1,5 @@
 /* Vitali Gretschko — site interactions
-   Theme · scrollspy · reveal · stats · auction sim · publications · palette */
+   Theme · scrollspy · reveal · stats · blurbs from beyond · publications · palette */
 (function () {
   "use strict";
 
@@ -26,7 +26,6 @@
       doc.head.appendChild(meta);
     }
     meta.content = theme === "dark" ? "#171310" : "#f7f3ec";
-    if (sim) sim.refreshColors();
   }
 
   if (themeBtn) {
@@ -206,273 +205,65 @@
   if (searchInput) searchInput.addEventListener("input", applyPubFilter);
   applyPubFilter();
 
-  /* ---------------- Auction simulation ---------------- */
-  var sim = null;
-  var canvas = doc.getElementById("auction-canvas");
-  var statusEl = doc.getElementById("sim-status");
-  var replayBtn = doc.getElementById("sim-replay");
+  /* ---------------- Blurbs from beyond the grave ---------------- */
+  var blurbNextFn = null;
+  var blurbStage = doc.getElementById("blurb-stage");
+  if (blurbStage) {
+    var blurbs = Array.prototype.slice.call(blurbStage.querySelectorAll(".blurb"));
+    var bPrev = doc.getElementById("blurb-prev");
+    var bNext = doc.getElementById("blurb-next");
+    var bCount = doc.getElementById("blurb-count");
+    var blurbWrap = doc.getElementById("blurbs");
+    var bIdx = Math.floor(Math.random() * blurbs.length);
+    var bTimer = null;
+    var BLURB_HOLD = 11000;
 
-  if (canvas && canvas.getContext) {
-    sim = (function () {
-      var ctx = canvas.getContext("2d");
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      var W = 0, H = 0;
-      var colors = {};
-      var bidders = [];
-      var t = 0;              // auction clock, 0..1
-      var speed = 0.0016;     // per frame-ish (scaled by dt)
-      var phase = "run";      // run | settle | fade
-      var settleAt = 0;
-      var running = false;
-      var visible = false;
-      var lastTs = 0;
-      var PAD_L = 46, PAD_R = 26, PAD_T = 30, PAD_B = 24;
-      var PMAX = 100;
+    var showBlurb = function (i) {
+      bIdx = ((i % blurbs.length) + blurbs.length) % blurbs.length;
+      blurbs.forEach(function (el, j) { el.classList.toggle("active", j === bIdx); });
+      if (bCount) bCount.textContent = (bIdx + 1) + "/" + blurbs.length;
+    };
+    var stopBlurbs = function () { if (bTimer) { clearInterval(bTimer); bTimer = null; } };
+    var startBlurbs = function () {
+      if (reducedMotion || bTimer || doc.hidden) return;
+      bTimer = setInterval(function () { showBlurb(bIdx + 1); }, BLURB_HOLD);
+    };
+    var stepBlurb = function (delta) {
+      showBlurb(bIdx + delta);
+      stopBlurbs();
+      startBlurbs();
+    };
+    blurbNextFn = function () { stepBlurb(1); };
 
-      function cssVar(name) {
-        return getComputedStyle(root).getPropertyValue(name).trim();
-      }
+    if (bPrev) bPrev.addEventListener("click", function () { stepBlurb(-1); });
+    if (bNext) bNext.addEventListener("click", function () { stepBlurb(1); });
+    if (blurbWrap) {
+      blurbWrap.addEventListener("mouseenter", stopBlurbs);
+      blurbWrap.addEventListener("mouseleave", startBlurbs);
+      blurbWrap.addEventListener("focusin", stopBlurbs);
+      blurbWrap.addEventListener("focusout", startBlurbs);
+    }
+    doc.addEventListener("visibilitychange", function () {
+      if (doc.hidden) stopBlurbs(); else startBlurbs();
+    });
 
-      function refreshColors() {
-        colors = {
-          line: cssVar("--line-strong"),
-          faint: cssVar("--line"),
-          ink: cssVar("--muted"),
-          softInk: cssVar("--ink-soft"),
-          accent: cssVar("--accent"),
-          accentStrong: cssVar("--accent-strong"),
-          amber: cssVar("--amber")
-        };
-        // repaint stills (reduced motion / paused) with the new palette
-        if (bidders.length && (reducedMotion || !running)) draw(performance.now());
-      }
+    showBlurb(bIdx);
+    startBlurbs();
 
-      function resize() {
-        var rect = canvas.getBoundingClientRect();
-        W = Math.max(rect.width, 10);
-        H = Math.max(rect.height, 10);
-        canvas.width = Math.round(W * dpr);
-        canvas.height = Math.round(H * dpr);
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-
-      function newRound() {
-        var n = W < 640 ? 5 : 7;
-        bidders = [];
-        for (var i = 0; i < n; i++) {
-          bidders.push({ v: 22 + Math.random() * 72, exited: false, exitT: 0 });
-        }
-        // ensure a clear gap between top two values so the ending reads well
-        bidders.sort(function (a, b) { return a.v - b.v; });
-        var top = bidders[bidders.length - 1], second = bidders[bidders.length - 2];
-        if (top.v - second.v < 6) top.v = Math.min(97, second.v + 6 + Math.random() * 4);
-        t = 0;
-        phase = "run";
-        if (statusEl) statusEl.textContent = "Live: ascending clock auction — " + n + " bidders in, price rising";
-      }
-
-      function x(frac) { return PAD_L + frac * (W - PAD_L - PAD_R); }
-      function y(price) { return H - PAD_B - (price / PMAX) * (H - PAD_T - PAD_B); }
-
-      function secondHighest() { return bidders[bidders.length - 2].v; }
-      function highest() { return bidders[bidders.length - 1].v; }
-
-      function priceAt(frac) { return frac * PMAX; }
-
-      function draw(now) {
-        ctx.clearRect(0, 0, W, H);
-        ctx.font = '10.5px ui-monospace, "SF Mono", Menlo, monospace';
-
-        // gridlines + labels
-        ctx.strokeStyle = colors.faint;
-        ctx.fillStyle = colors.ink;
-        ctx.lineWidth = 1;
-        [25, 50, 75].forEach(function (p) {
-          ctx.globalAlpha = 0.7;
-          ctx.beginPath();
-          ctx.moveTo(PAD_L, y(p));
-          ctx.lineTo(W - PAD_R, y(p));
-          ctx.stroke();
-          ctx.globalAlpha = 1;
-          ctx.fillText(String(p), 18, y(p) + 3.5);
-        });
-
-        var endP = secondHighest();
-        var curP = Math.min(priceAt(t), phase === "run" ? PMAX : endP);
-
-        // bidder value lines (revealed as faint dashes) + exit markers
-        bidders.forEach(function (b) {
-          var by = y(b.v);
-          if (b.exited) {
-            ctx.setLineDash([3, 5]);
-            ctx.strokeStyle = colors.line;
-            ctx.globalAlpha = 0.9;
-            ctx.beginPath();
-            ctx.moveTo(PAD_L, by);
-            ctx.lineTo(x(b.exitT), by);
-            ctx.stroke();
-            ctx.setLineDash([]);
-            ctx.globalAlpha = 1;
-            // exit ring
-            ctx.strokeStyle = colors.ink;
-            ctx.beginPath();
-            ctx.arc(x(b.exitT), by, 3.6, 0, Math.PI * 2);
-            ctx.stroke();
-          }
-        });
-
-        // price path
-        var frac = phase === "run" ? t : endP / PMAX;
-        ctx.strokeStyle = colors.accent;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(x(0), y(0));
-        ctx.lineTo(x(Math.min(frac, 1)), y(Math.min(curP, endP + (phase === "run" ? PMAX : 0))));
-        ctx.stroke();
-
-        // leading dot
-        var lx = x(Math.min(frac, 1));
-        var ly = y(phase === "run" ? curP : endP);
-        ctx.fillStyle = colors.accentStrong;
-        ctx.beginPath();
-        ctx.arc(lx, ly, 4, 0, Math.PI * 2);
-        ctx.fill();
-
-        if (phase !== "run") {
-          // clearing price line + pulse
-          var age = (now - settleAt) / 1000;
-          ctx.setLineDash([6, 6]);
-          ctx.strokeStyle = colors.accentStrong;
-          ctx.lineWidth = 1.2;
-          ctx.beginPath();
-          ctx.moveTo(lx, ly);
-          ctx.lineTo(W - PAD_R, ly);
-          ctx.stroke();
-          ctx.setLineDash([]);
-          if (!reducedMotion) {
-            var pr = 4 + (age % 1.4) * 10;
-            ctx.globalAlpha = Math.max(0, 0.5 - (age % 1.4) * 0.36);
-            ctx.strokeStyle = colors.accentStrong;
-            ctx.beginPath();
-            ctx.arc(lx, ly, pr, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-          }
-          ctx.fillStyle = colors.softInk;
-          var label = "sold at " + endP.toFixed(1);
-          ctx.fillText(label, Math.min(lx + 10, W - PAD_R - 70), ly - 8);
-        }
-
-        // axis
-        ctx.strokeStyle = colors.line;
-        ctx.beginPath();
-        ctx.moveTo(PAD_L, PAD_T - 8);
-        ctx.lineTo(PAD_L, H - PAD_B);
-        ctx.lineTo(W - PAD_R, H - PAD_B);
-        ctx.stroke();
-
-        // caption bottom-left: active bidders
-        var active = bidders.filter(function (b) { return !b.exited; }).length;
-        ctx.fillStyle = colors.ink;
-        if (W >= 640) ctx.fillText("price", 18, PAD_T - 12);
-        ctx.fillText(phase === "run" ? active + " bidders active" : "1 winner · pays the price at which the last rival quit",
-          PAD_L + 6, H - 8);
-      }
-
-      function tick(ts) {
-        if (!running) return;
-        var dt = lastTs ? Math.min(ts - lastTs, 50) : 16;
-        lastTs = ts;
-
-        if (phase === "run") {
-          t += speed * dt * 0.08;
-          var p = priceAt(t);
-          bidders.forEach(function (b, i) {
-            if (!b.exited && i < bidders.length - 1 && p >= b.v) {
-              // everyone but the highest exits at their value
-              if (b.v <= secondHighest()) {
-                b.exited = true;
-                b.exitT = t;
-              }
-            }
-          });
-          if (p >= secondHighest()) {
-            phase = "settle";
-            settleAt = ts;
-            // the runner-up exits exactly at the clearing price
-            var ru = bidders[bidders.length - 2];
-            if (!ru.exited) { ru.exited = true; ru.exitT = t; }
-            if (statusEl) statusEl.textContent =
-              "Sold at " + secondHighest().toFixed(1) + " — truthful bidding is a dominant strategy here";
-          }
-        } else if (ts - settleAt > 3400) {
-          newRound();
-        }
-
-        draw(ts);
-        requestAnimationFrame(tick);
-      }
-
-      function start() {
-        if (running || !visible) return;
-        running = true;
-        lastTs = 0;
-        requestAnimationFrame(tick);
-      }
-      function stop() { running = false; }
-
-      function staticFrame() {
-        // reduced motion: show the finished auction as a still
-        t = 1;
-        phase = "settle";
-        settleAt = performance.now();
-        bidders.forEach(function (b, i) {
-          if (i < bidders.length - 1) { b.exited = true; b.exitT = b.v / PMAX; }
-        });
-        if (statusEl) statusEl.textContent =
-          "Ascending clock auction — sold at " + secondHighest().toFixed(1) + " (second-highest value)";
-        draw(performance.now());
-      }
-
-      function restart() {
-        newRound();
-        if (reducedMotion) staticFrame();
-      }
-
-      // wiring
-      refreshColors();
-      resize();
-      newRound();
-      if (reducedMotion) staticFrame();
-
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          visible = en.isIntersecting;
-          if (reducedMotion) return;
-          if (visible) start(); else stop();
-        });
-      }, { threshold: 0.05 });
-      io.observe(canvas);
-
-      doc.addEventListener("visibilitychange", function () {
-        if (reducedMotion) return;
-        if (doc.hidden) stop(); else start();
-      });
-
-      var resizeTimer = null;
-      window.addEventListener("resize", function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-          resize();
-          if (reducedMotion) staticFrame();
-        }, 120);
-      });
-
-      canvas.addEventListener("click", restart);
-      if (replayBtn) replayBtn.addEventListener("click", restart);
-
-      return { refreshColors: refreshColors, restart: restart };
-    })();
+    // paper links: clear filters so the target is visible, then jump + flash
+    blurbStage.addEventListener("click", function (ev) {
+      var a = ev.target.closest(".blurb-paper");
+      if (!a) return;
+      var id = (a.getAttribute("href") || "").slice(1);
+      var el = id && doc.getElementById(id);
+      if (!el) return;
+      ev.preventDefault();
+      filterBtns.forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-filter") === "all"); });
+      activeFilter = "all";
+      if (searchInput) searchInput.value = "";
+      applyPubFilter();
+      jumpTo(el);
+    });
   }
 
   /* ---------------- Command palette ---------------- */
@@ -533,7 +324,7 @@
       ["AI for economic research — resource hub", "link", function () { window.location.href = "ai-econ-research/"; }],
       ["Copy email address", "action", function () { copyText("vitali.gretschko@wiwi.uni-muenster.de", "Email address copied"); }],
       ["Toggle dark / light mode", "action", function () { applyTheme(currentTheme() === "dark" ? "light" : "dark", true); }],
-      ["Replay the auction animation", "action", function () { if (sim) sim.restart(); doc.getElementById("top").scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" }); }]
+      ["Next endorsement from beyond the grave", "fun", function () { if (blurbNextFn) blurbNextFn(); var b = doc.getElementById("blurbs"); if (b) b.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" }); }]
     ].forEach(function (c) {
       commands.push({ label: c[0], kind: c[1], run: c[2] });
     });
