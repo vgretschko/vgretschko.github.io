@@ -83,29 +83,6 @@
     revealEls.forEach(function (el) { ro.observe(el); });
   }
 
-  /* ---------------- Count-up stats ---------------- */
-  var counters = doc.querySelectorAll(".stat-num[data-count]");
-  var co = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (!en.isIntersecting) return;
-      co.unobserve(en.target);
-      var el = en.target;
-      var target = parseInt(el.getAttribute("data-count"), 10) || 0;
-      if (reducedMotion) { el.textContent = target; return; }
-      var t0 = null;
-      var dur = 950;
-      function step(ts) {
-        if (!t0) t0 = ts;
-        var p = Math.min((ts - t0) / dur, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(eased * target);
-        if (p < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    });
-  }, { threshold: 0.6 });
-  counters.forEach(function (el) { co.observe(el); });
-
   /* ---------------- Toast ---------------- */
   var toastEl = doc.getElementById("toast");
   var toastTimer = null;
@@ -169,6 +146,7 @@
 
   /* ---------------- Publications: filter + search ---------------- */
   var pubs = Array.prototype.slice.call(doc.querySelectorAll("#pub-list .pub"));
+  var pubGroups = Array.prototype.slice.call(doc.querySelectorAll("#pub-list .pub-group"));
   var filterBtns = Array.prototype.slice.call(doc.querySelectorAll(".filter-btn"));
   var searchInput = doc.getElementById("pub-search");
   var countEl = doc.getElementById("pub-count");
@@ -183,12 +161,20 @@
     var q = (searchInput && searchInput.value || "").trim().toLowerCase();
     var terms = q.split(/\s+/).filter(Boolean);
     var shown = 0;
+    var shownByKind = {};
     pubs.forEach(function (el, i) {
-      var okKind = activeFilter === "all" || el.getAttribute("data-kind") === activeFilter;
+      var kind = el.getAttribute("data-kind");
+      var okKind = activeFilter === "all" || kind === activeFilter;
       var okText = terms.every(function (t) { return pubIndex[i].indexOf(t) !== -1; });
       var show = okKind && okText;
       el.hidden = !show;
-      if (show) shown++;
+      if (show) {
+        shown++;
+        shownByKind[kind] = true;
+      }
+    });
+    pubGroups.forEach(function (h) {
+      h.hidden = !shownByKind[h.getAttribute("data-group")];
     });
     if (countEl) countEl.textContent = shown + "/" + pubs.length;
     if (emptyEl) emptyEl.hidden = shown !== 0;
@@ -285,8 +271,8 @@
   function buildCommands() {
     commands = [];
     // sections
-    [["top", "Top — Vitali Gretschko"], ["about", "About"], ["research", "Research"],
-     ["consulting", "Consulting & Policy"], ["teaching", "Teaching & Advising"],
+    [["top", "Top — Vitali Gretschko"], ["selected", "Selected Publications"], ["about", "About"],
+     ["research", "Research"], ["consulting", "Consulting & Policy"], ["teaching", "Teaching & Advising"],
      ["tools", "Interactive Tools"], ["media", "In the Media"], ["contact", "Contact"]
     ].forEach(function (s) {
       var el = doc.getElementById(s[0]);
