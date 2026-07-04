@@ -911,8 +911,6 @@ html[data-theme="dark"] .filter-btn.active { color: #201409; }
   color: var(--accent-strong);
 }
 
-.tools-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
 /* ---------- Teaching ---------- */
 .teach-grid {
   display: grid;
@@ -1229,7 +1227,6 @@ html.js .reveal.visible { opacity: 1; transform: none; }
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px) {
   .cards { grid-template-columns: repeat(2, 1fr); }
-  .tools-cards { grid-template-columns: repeat(2, 1fr); }
   .teach-grid { grid-template-columns: 1fr 1fr; }
   .sel-grid { grid-template-columns: 1fr; }
 }
@@ -1254,7 +1251,7 @@ html.js .reveal.visible { opacity: 1; transform: none; }
 }
 
 @media (max-width: 560px) {
-  .cards, .tools-cards { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: 1fr; }
   .blurb-head { flex-wrap: wrap; row-gap: 6px; }
   .blurb-label { flex: 1 1 100%; order: 2; }
   .blurb-nav { order: 1; }

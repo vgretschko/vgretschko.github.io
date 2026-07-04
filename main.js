@@ -167,17 +167,25 @@
       var okKind = activeFilter === "all" || kind === activeFilter;
       var okText = terms.every(function (t) { return pubIndex[i].indexOf(t) !== -1; });
       var show = okKind && okText;
+      // inline style, not just [hidden]: author CSS on .pub would override the
+      // UA hidden rule, and stale cached stylesheets must not break filtering
       el.hidden = !show;
+      el.style.display = show ? "" : "none";
       if (show) {
         shown++;
         shownByKind[kind] = true;
       }
     });
     pubGroups.forEach(function (h) {
-      h.hidden = !shownByKind[h.getAttribute("data-group")];
+      var show = !!shownByKind[h.getAttribute("data-group")];
+      h.hidden = !show;
+      h.style.display = show ? "" : "none";
     });
     if (countEl) countEl.textContent = shown + "/" + pubs.length;
-    if (emptyEl) emptyEl.hidden = shown !== 0;
+    if (emptyEl) {
+      emptyEl.hidden = shown !== 0;
+      emptyEl.style.display = shown !== 0 ? "none" : "";
+    }
   }
 
   filterBtns.forEach(function (btn) {
