@@ -36,15 +36,19 @@
         t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       }
       d.setAttribute("data-theme", t);
+      var s = null;
+      try { s = localStorage.getItem("vg-skin"); } catch (e) { }
+      if (["corten", "blackboard", "swiss", "terminal"].indexOf(s) === -1) s = "corten";
+      d.setAttribute("data-skin", s);
     })();
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600;700&family=Caveat:wght@500..700&family=Archivo:ital,wght@0,500..900;1,600&family=JetBrains+Mono:ital,wght@0,400..700;1,400&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
 
   <script type="application/ld+json">
   {
@@ -95,6 +99,37 @@
         <button id="palette-btn" class="kbd-btn" type="button" aria-label="Open quick navigation (Cmd+K)">
           <span aria-hidden="true">⌘K</span>
         </button>
+        <div class="skin-wrap">
+          <button id="skin-btn" class="icon-btn" type="button" aria-label="Choose a design" aria-haspopup="true"
+            aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+              <path d="M12 3a9 9 0 0 0 0 18h1.6a2.3 2.3 0 0 0 1.7-3.8 2.3 2.3 0 0 1 1.7-3.8H19a3.9 3.9 0 0 0 2.1-7.2A9 9 0 0 0 12 3Z"
+                fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+              <circle cx="7.6" cy="10.4" r="1.3" fill="currentColor" />
+              <circle cx="12" cy="7.4" r="1.3" fill="currentColor" />
+              <circle cx="16.4" cy="10.4" r="1.3" fill="currentColor" />
+            </svg>
+          </button>
+          <div class="skin-menu" id="skin-menu" hidden aria-label="Choose a design">
+            <p class="skin-menu-title">Design</p>
+            <button class="skin-opt" type="button" role="menuitemradio" aria-checked="true" data-skin="corten">
+              <span class="skin-dot corten" aria-hidden="true"></span>
+              <span>Corten<small>warm paper &amp; rust</small></span>
+            </button>
+            <button class="skin-opt" type="button" role="menuitemradio" aria-checked="false" data-skin="blackboard">
+              <span class="skin-dot blackboard" aria-hidden="true"></span>
+              <span>Blackboard<small>chalk on slate</small></span>
+            </button>
+            <button class="skin-opt" type="button" role="menuitemradio" aria-checked="false" data-skin="swiss">
+              <span class="skin-dot swiss" aria-hidden="true"></span>
+              <span>Swiss<small>modernist grid</small></span>
+            </button>
+            <button class="skin-opt" type="button" role="menuitemradio" aria-checked="false" data-skin="terminal">
+              <span class="skin-dot terminal" aria-hidden="true"></span>
+              <span>Terminal<small>phosphor &amp; mono</small></span>
+            </button>
+          </div>
+        </div>
         <button id="theme-btn" class="icon-btn" type="button" aria-label="Toggle dark mode">
           <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
             <circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="1.7" />
@@ -1098,7 +1133,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="main.js?v=4" defer></script>
+  <script src="main.js?v=5" defer></script>
 </body>
 
 </html>

@@ -14,23 +14,86 @@
     return root.getAttribute("data-theme") === "dark" ? "dark" : "light";
   }
 
-  function applyTheme(theme, persist) {
-    root.setAttribute("data-theme", theme);
-    if (persist) {
-      try { localStorage.setItem("vg-theme", theme); } catch (e) { /* private mode */ }
-    }
+  function refreshThemeColorMeta() {
     var meta = doc.querySelector('meta[name="theme-color"]:not([media])');
     if (!meta) {
       meta = doc.createElement("meta");
       meta.name = "theme-color";
       doc.head.appendChild(meta);
     }
-    meta.content = theme === "dark" ? "#171310" : "#f7f3ec";
+    meta.content = getComputedStyle(root).getPropertyValue("--bg").trim() || "#f7f3ec";
+  }
+
+  function applyTheme(theme, persist) {
+    root.setAttribute("data-theme", theme);
+    if (persist) {
+      try { localStorage.setItem("vg-theme", theme); } catch (e) { /* private mode */ }
+    }
+    refreshThemeColorMeta();
   }
 
   if (themeBtn) {
     themeBtn.addEventListener("click", function () {
       applyTheme(currentTheme() === "dark" ? "light" : "dark", true);
+    });
+  }
+
+  /* ---------------- Skins (design switcher) ---------------- */
+  var SKINS = [
+    { id: "corten", label: "Corten — warm paper & rust" },
+    { id: "blackboard", label: "Blackboard — chalk on slate" },
+    { id: "swiss", label: "Swiss — modernist grid" },
+    { id: "terminal", label: "Terminal — phosphor & mono" }
+  ];
+  var skinBtn = doc.getElementById("skin-btn");
+  var skinMenu = doc.getElementById("skin-menu");
+
+  function skinById(id) {
+    for (var i = 0; i < SKINS.length; i++) if (SKINS[i].id === id) return SKINS[i];
+    return SKINS[0];
+  }
+
+  function applySkin(id, persist) {
+    var skin = skinById(id);
+    root.setAttribute("data-skin", skin.id);
+    if (persist) {
+      try { localStorage.setItem("vg-skin", skin.id); } catch (e) { /* private mode */ }
+    }
+    if (skinMenu) {
+      Array.prototype.forEach.call(skinMenu.querySelectorAll(".skin-opt"), function (b) {
+        b.setAttribute("aria-checked", b.getAttribute("data-skin") === skin.id ? "true" : "false");
+      });
+    }
+    refreshThemeColorMeta();
+    return skin;
+  }
+
+  function closeSkinMenu() {
+    if (skinMenu && !skinMenu.hidden) {
+      skinMenu.hidden = true;
+      if (skinBtn) skinBtn.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (skinBtn && skinMenu) {
+    applySkin(root.getAttribute("data-skin"), false); // sync menu checkmarks with pre-paint choice
+
+    skinBtn.addEventListener("click", function () {
+      var open = skinMenu.hidden;
+      skinMenu.hidden = !open;
+      skinBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    skinMenu.addEventListener("click", function (ev) {
+      var opt = ev.target.closest(".skin-opt");
+      if (!opt) return;
+      var skin = applySkin(opt.getAttribute("data-skin"), true);
+      toast("Design: " + skin.label);
+      closeSkinMenu();
+    });
+
+    doc.addEventListener("mousedown", function (ev) {
+      if (!ev.target.closest(".skin-wrap")) closeSkinMenu();
     });
   }
 
@@ -322,6 +385,13 @@
     ].forEach(function (c) {
       commands.push({ label: c[0], kind: c[1], run: c[2] });
     });
+    // design switcher
+    SKINS.forEach(function (s) {
+      commands.push({
+        label: "Design: " + s.label, kind: "design",
+        run: function () { applySkin(s.id, true); toast("Design: " + s.label); }
+      });
+    });
   }
 
   function scoreCommand(cmd, q) {
@@ -415,6 +485,7 @@
         if (paletteWrap.hidden) openPalette(); else closePalette();
       } else if (ev.key === "Escape") {
         closePalette();
+        closeSkinMenu();
       }
     });
   }
