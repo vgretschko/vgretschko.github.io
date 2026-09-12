@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /reading-notes-p8jqv1/
 Sitemap: https://vgretschko.github.io/sitemap.xml
