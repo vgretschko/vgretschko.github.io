@@ -8,7 +8,7 @@ const resources = [
     type: "Essay",
     audience: "All researchers",
     summary: "A clear map of where AI changes the economics research pipeline, from ideation to publishing.",
-    useful: "Best first reading for framing AI as research leverage rather than only automation.",
+    useful: "The best first read. It treats AI as leverage for research, not just automation.",
     tags: ["research pipeline", "economics", "workflow"]
   },
   {
@@ -20,7 +20,7 @@ const resources = [
     type: "Memo",
     audience: "PhD students and faculty",
     summary: "Scenario-based advice on how AI may change skill acquisition, research judgment, and economics careers.",
-    useful: "Use this to discuss what remains scarce when models get better at coding, writing, and proofs.",
+    useful: "A starting point for asking what stays scarce once models get better at coding, writing, and proofs.",
     tags: ["career", "judgment", "graduate students"]
   },
   {
@@ -32,7 +32,7 @@ const resources = [
     type: "Essay",
     audience: "All researchers",
     summary: "Argues that AI already increases research productivity when paired with expert direction and open workflows.",
-    useful: "Good motivation for moving from casual chatbots to repeatable research systems.",
+    useful: "A push to move from casual chatbot use to repeatable research systems.",
     tags: ["productivity", "open science", "benchmarks"]
   },
   {
@@ -55,8 +55,8 @@ const resources = [
     level: "Beginner",
     type: "Guide",
     audience: "Economists",
-    summary: "A compact economist-oriented guide for integrating GPT-style systems into everyday research tasks.",
-    useful: "Useful handout for people who want a conventional academic reference.",
+    summary: "A short guide for economists on bringing GPT-style systems into everyday research tasks.",
+    useful: "A handout for people who want a conventional academic reference.",
     tags: ["economics", "guide", "LLMs"]
   },
   {
@@ -68,7 +68,7 @@ const resources = [
     type: "Resource list",
     audience: "Workshop participants",
     summary: "A live workshop resource page collecting papers, guides, and hands-on agentic AI materials for economists.",
-    useful: "Good companion list when you want more links after this presentation.",
+    useful: "A companion list for when you want more links after this presentation.",
     tags: ["workshop", "agents", "economics"]
   },
   {
@@ -80,7 +80,7 @@ const resources = [
     type: "Code starter",
     audience: "Empirical researchers",
     summary: "A container-based setup for using Claude Code in reproducible empirical research environments.",
-    useful: "Best starting point for participants who want to try agentic coding without wrecking their machine setup.",
+    useful: "The place to start if you want to try agentic coding without wrecking your machine setup.",
     tags: ["Claude Code", "container", "reproducibility"]
   },
   {
@@ -104,7 +104,7 @@ const resources = [
     type: "Tutorial",
     audience: "Economics researchers",
     summary: "Introduces agentic workflows for economics research, with an emphasis on practical task decomposition.",
-    useful: "Good for showing how to move beyond one-off chatbot prompts.",
+    useful: "Shows how to move beyond one-off chatbot prompts.",
     tags: ["agents", "economics", "tutorial"]
   },
   {
@@ -116,7 +116,7 @@ const resources = [
     type: "Workflow",
     audience: "Applied economists",
     summary: "A field report on integrating Claude Code into causal inference and empirical research workflows.",
-    useful: "Use when discussing how an economist's day-to-day work changes with coding agents.",
+    useful: "A firsthand account of how an economist's daily work changes with coding agents.",
     tags: ["Claude Code", "causal inference", "workflow"]
   },
   {
@@ -128,7 +128,7 @@ const resources = [
     type: "Workflow",
     audience: "Empirical researchers",
     summary: "A concrete account of using Claude Code for empirical projects, including iteration and code review habits.",
-    useful: "Helpful for researchers who already code and want a realistic workflow model.",
+    useful: "For researchers who already code and want a realistic workflow to copy.",
     tags: ["empirical work", "Claude Code", "research process"]
   },
   {
@@ -140,7 +140,7 @@ const resources = [
     type: "Workflow",
     audience: "Applied econometricians",
     summary: "Personal workflow notes for using Claude Code in applied econometrics and research programming.",
-    useful: "Good bridge from demonstration to an economist's actual project habits.",
+    useful: "Shows what Claude Code looks like in an economist's real project habits, beyond a demo.",
     tags: ["econometrics", "Claude Code", "coding"]
   },
   {
@@ -152,7 +152,7 @@ const resources = [
     type: "Guide",
     audience: "Academics",
     summary: "A guide for configuring Claude-based academic workflows, including teams, project structure, and skills.",
-    useful: "Useful when a participant wants to systematize repeated research tasks.",
+    useful: "For when you want to systematize research tasks you repeat often.",
     tags: ["Claude", "academic workflow", "skills"]
   },
   {
@@ -164,7 +164,7 @@ const resources = [
     type: "Code starter",
     audience: "Academic Codex users",
     summary: "A public collection of reusable Codex skills for academic writing, review, presentation, auditing, and software workflows.",
-    useful: "Good source for participants who want to turn recurring research tasks into reusable agent skills.",
+    useful: "Worth a look if you want to turn recurring research tasks into reusable agent skills.",
     tags: ["Codex skills", "academic workflow", "automation"]
   },
   {
@@ -176,7 +176,7 @@ const resources = [
     type: "Workflow",
     audience: "Academic researchers",
     summary: "A structured view of how AI can support a research project from question to outputs.",
-    useful: "Good for thinking about division of labor between human judgment and AI execution.",
+    useful: "Helps you think through the division of labor between human judgment and AI execution.",
     tags: ["project management", "research flow", "Claude"]
   },
   {
@@ -200,7 +200,7 @@ const resources = [
     type: "Prompting",
     audience: "Technical users",
     summary: "A concise set of instructions for steering Claude Code toward better engineering behavior.",
-    useful: "Good example of how system instructions shape agent reliability.",
+    useful: "An example of how system instructions shape agent reliability.",
     tags: ["CLAUDE.md", "instructions", "agent behavior"]
   },
   {
@@ -224,7 +224,7 @@ const resources = [
     type: "Code starter",
     audience: "Presenters and teachers",
     summary: "A Claude skill for producing academic PowerPoint presentations from structured instructions.",
-    useful: "Relevant for participants who want to turn research outputs into talks quickly.",
+    useful: "For turning research results into a talk quickly.",
     tags: ["presentations", "slides", "Claude skills"]
   },
   {
@@ -236,7 +236,7 @@ const resources = [
     type: "Guide",
     audience: "Researchers and writers",
     summary: "Part of a Claude Code for economists series, focused on writing, analysis, and thought partnership.",
-    useful: "Strong reading for people who think AI is only useful for coding.",
+    useful: "Worth reading if you think AI is only good for coding.",
     tags: ["writing", "thinking", "Claude"]
   },
   {
@@ -248,7 +248,7 @@ const resources = [
     type: "Proposal",
     audience: "Authors and journal editors",
     summary: "A proposal for making academic papers easier for LLMs to parse, inspect, and build on.",
-    useful: "Use when discussing how publication formats may adapt to machine readers.",
+    useful: "For discussing how publication formats may adapt to machine readers.",
     tags: ["LLM readability", "publishing", "paper design"]
   },
   {
@@ -260,7 +260,7 @@ const resources = [
     type: "Standard",
     audience: "Authors and web maintainers",
     summary: "A proposed convention for making website content easier for language models to discover and use.",
-    useful: "Practical reference for researchers who publish web-based documentation or papers.",
+    useful: "A practical reference if you publish papers or documentation on the web.",
     tags: ["discoverability", "web", "LLMs"]
   },
   {
@@ -272,7 +272,7 @@ const resources = [
     type: "Prompting",
     audience: "Prompt experimenters",
     summary: "A public collection of GPT prompts and GPT-style workflows.",
-    useful: "Useful as inspiration, with the caveat that prompts should be adapted to the research task.",
+    useful: "Handy for inspiration, but the prompts still need adapting to the research task.",
     tags: ["prompts", "GPTs", "experimentation"]
   },
   {
@@ -284,7 +284,7 @@ const resources = [
     type: "Essay",
     audience: "Empirical economists",
     summary: "Critiques automated policy evaluation workflows and argues that many lean heavily on diff-in-diff designs.",
-    useful: "Important cautionary piece for evaluating AI-generated empirical papers.",
+    useful: "A cautionary piece to read before evaluating AI-generated empirical papers.",
     tags: ["policy evaluation", "diff-in-diff", "APE"]
   },
   {
@@ -296,7 +296,7 @@ const resources = [
     type: "Project",
     audience: "Empirical researchers",
     summary: "A project exploring autonomous policy evaluation and AI-generated empirical research papers.",
-    useful: "Use this as the central case study for what automated empirical research can and cannot do.",
+    useful: "The central case study of what automated empirical research can and cannot do.",
     tags: ["APE", "policy evaluation", "autonomous research"]
   },
   {
@@ -308,7 +308,7 @@ const resources = [
     type: "Paper",
     audience: "Applied micro researchers",
     summary: "An autonomous policy-evaluation paper on German solar policy thresholds and bunching behavior.",
-    useful: "Good concrete example for discussing the quality and limits of AI-produced empirical papers.",
+    useful: "A concrete case for discussing the quality and limits of AI-produced empirical papers.",
     tags: ["autonomous paper", "climate policy", "bunching"]
   },
   {
@@ -320,7 +320,7 @@ const resources = [
     type: "Paper",
     audience: "Researchers evaluating agents",
     summary: "Compares agentic AI systems with human economists on research-like tasks.",
-    useful: "Relevant for evidence-based discussion of agent performance instead of vibes alone.",
+    useful: "Evidence on how well agents actually perform, for a discussion that goes beyond vibes.",
     tags: ["agent evaluation", "economists", "SSRN"]
   },
   {
@@ -332,7 +332,7 @@ const resources = [
     type: "Paper",
     audience: "Econometricians",
     summary: "A paper on AI-assisted empirical analysis and the need to formalize commitments in the research workflow.",
-    useful: "Useful for discussing auditability, pre-analysis discipline, and model-generated code.",
+    useful: "For discussing auditability, pre-analysis discipline, and code written by models.",
     tags: ["econometrics", "analysis contract", "audit"]
   },
   {
@@ -344,7 +344,7 @@ const resources = [
     type: "Paper",
     audience: "Economists",
     summary: "A paper-length introduction to deep learning concepts and applications for economics.",
-    useful: "Good technical bridge for economists who know statistics but not modern deep learning.",
+    useful: "A good technical primer for economists who know statistics but not modern deep learning.",
     tags: ["deep learning", "economics", "methods"]
   },
   {
@@ -356,7 +356,7 @@ const resources = [
     type: "Paper",
     audience: "Behavioral and computational social scientists",
     summary: "A Nature article and code-availability page on behavioral modeling with large language models.",
-    useful: "Good example of LLMs as behavioral models rather than only productivity tools.",
+    useful: "Uses LLMs as behavioral models, not only as productivity tools.",
     tags: ["behavior", "LLMs", "Nature"]
   },
   {
@@ -368,7 +368,7 @@ const resources = [
     type: "Paper",
     audience: "Game theorists and market designers",
     summary: "Research on AI systems in negotiation settings.",
-    useful: "Use this for participants interested in strategic interaction between AI agents.",
+    useful: "For anyone interested in strategic interaction between AI agents.",
     tags: ["negotiation", "agents", "game theory"]
   },
   {
@@ -380,7 +380,7 @@ const resources = [
     type: "Paper",
     audience: "Research leaders and editors",
     summary: "Analyzes how AI changes incentives in knowledge production, with a focus on quantity versus quality.",
-    useful: "Best academic anchor for discussing institutional response rather than individual productivity.",
+    useful: "The best academic paper here for discussing institutional responses rather than individual productivity.",
     tags: ["incentives", "publishing", "quality"]
   },
   {
@@ -392,7 +392,7 @@ const resources = [
     type: "Opinion",
     audience: "Academics",
     summary: "A provocative set of theses about how AI changes social science research and academic status games.",
-    useful: "Good discussion starter when the room needs a sharper claim.",
+    useful: "Sharp claims that get a discussion going.",
     tags: ["academia", "opinion", "social science"]
   },
   {
@@ -404,7 +404,7 @@ const resources = [
     type: "Opinion",
     audience: "Academics",
     summary: "Reflects on responses to the first essay and clarifies the argument about AI and academic work.",
-    useful: "Use after the first essay if participants want the backlash and refinement.",
+    useful: "Read after the first essay for the backlash and the refined argument.",
     tags: ["academia", "debate", "AI use"]
   },
   {
@@ -416,7 +416,7 @@ const resources = [
     type: "Opinion",
     audience: "Academics",
     summary: "Moves from diagnosis to what academics can and cannot do as AI lowers the cost of producing research-like work.",
-    useful: "Useful for a closing debate on status, quality, and what humans still contribute.",
+    useful: "Material for a closing debate on status, quality, and what humans still add.",
     tags: ["academia", "quality", "future of research"]
   },
   {
@@ -428,7 +428,7 @@ const resources = [
     type: "Opinion",
     audience: "Researchers and editors",
     summary: "A near-future thought experiment on how coding agents may increase research output while publication remains scarce.",
-    useful: "Good for separating knowledge production from journal bottlenecks.",
+    useful: "Separates producing knowledge from getting it through journals.",
     tags: ["publishing", "Claude Code", "journals"]
   },
   {
@@ -440,7 +440,7 @@ const resources = [
     type: "Essay",
     audience: "Social scientists",
     summary: "Argues that verification quality is a central bottleneck for social science in an AI-rich world.",
-    useful: "Excellent source for the question: if research gets cheaper, who checks it?",
+    useful: "Asks the obvious next question: if research gets cheaper, who checks it?",
     tags: ["verification", "peer review", "science"]
   },
   {
@@ -452,7 +452,7 @@ const resources = [
     type: "Article",
     audience: "General academic audience",
     summary: "Accessible overview of automated scientific discovery systems and what they imply for research.",
-    useful: "Good nontechnical reading for participants new to agentic AI in science.",
+    useful: "A nontechnical read for participants new to agentic AI in science.",
     tags: ["AI scientist", "automation", "science"]
   },
   {
@@ -464,7 +464,7 @@ const resources = [
     type: "Reading list",
     audience: "Academics",
     summary: "A short curated note connecting recent arguments about AI, academia, and research quality.",
-    useful: "Good lightweight bridge to several of the debate pieces.",
+    useful: "A quick way into several of the debate pieces.",
     tags: ["reading list", "academia", "AI research"]
   },
   {
@@ -476,7 +476,7 @@ const resources = [
     type: "Tool",
     audience: "Authors and reviewers",
     summary: "An AI-assisted academic paper review tool.",
-    useful: "Easy demonstration of how AI can help inspect drafts before submission.",
+    useful: "A quick demo of AI checking a draft before submission.",
     tags: ["paper review", "feedback", "tool"]
   },
   {
@@ -487,8 +487,8 @@ const resources = [
     level: "Beginner",
     type: "Tool",
     audience: "Authors and reviewers",
-    summary: "A free AI academic paper-review interface surfaced in the recent AI research debate.",
-    useful: "Good practical tool for participants who want immediate feedback on a draft.",
+    summary: "A free AI interface for reviewing academic papers. It came up in the recent AI research debate.",
+    useful: "A practical choice if you want immediate feedback on a draft.",
     tags: ["paper review", "academic writing", "tool"]
   },
   {
@@ -500,7 +500,7 @@ const resources = [
     type: "Code starter",
     audience: "Economists and reviewers",
     summary: "A reproducible multi-agent reviewer for academic economics papers, with preprocessing, reviewer prompts, validation, normalization, and editor report assembly.",
-    useful: "Best for people who want a local, inspectable paper-review pipeline rather than a hosted review tool.",
+    useful: "For when you want a local review pipeline you can inspect, instead of a hosted tool.",
     tags: ["paper review", "multi-agent", "economics"]
   },
   {
@@ -512,7 +512,7 @@ const resources = [
     type: "Tool",
     audience: "Authors and editors",
     summary: "A tool for checking whether references are real and traceable through Crossref.",
-    useful: "Useful safeguard against hallucinated or malformed references.",
+    useful: "A safeguard against hallucinated or malformed references.",
     tags: ["references", "hallucination", "Crossref"]
   },
   {
@@ -524,7 +524,7 @@ const resources = [
     type: "Benchmark",
     audience: "Theorists and formal methods users",
     summary: "Benchmark for evaluating AI systems on proof-oriented tasks.",
-    useful: "Good empirical anchor for claims about AI reasoning and mathematical proof.",
+    useful: "Empirical grounding for claims about AI reasoning and mathematical proof.",
     tags: ["proofs", "benchmark", "reasoning"]
   },
   {
@@ -536,7 +536,7 @@ const resources = [
     type: "Essay",
     audience: "Mathematicians and theorists",
     summary: "A detailed account of ChatGPT producing a substantial mathematical improvement in additive combinatorics.",
-    useful: "Strong case study for discussing when AI reasoning begins to look like original research.",
+    useful: "A case where AI reasoning starts to look like original research.",
     tags: ["mathematics", "proofs", "ChatGPT"]
   },
   {
@@ -548,7 +548,7 @@ const resources = [
     type: "Paper",
     audience: "Theorists",
     summary: "Research paper on LLM-generated mathematical proof.",
-    useful: "Useful for a more technical discussion of proof generation beyond anecdotes.",
+    useful: "For a more technical discussion of proof generation, beyond anecdotes.",
     tags: ["proof generation", "arXiv", "LLMs"]
   },
   {
@@ -560,7 +560,7 @@ const resources = [
     type: "Article",
     audience: "Technical users",
     summary: "A quick look at DeepSeek-Prover-V2 and its mathematical proving capabilities.",
-    useful: "Good context for participants curious about specialized proof models.",
+    useful: "Context for anyone curious about specialized proof models.",
     tags: ["DeepSeek", "proofs", "model testing"]
   },
   {
@@ -572,7 +572,7 @@ const resources = [
     type: "Project",
     audience: "Mathematicians and formal methods users",
     summary: "A project focused on natural-language mathematical reasoning and tooling.",
-    useful: "Helpful pointer for the bridge between informal math and formal verification.",
+    useful: "Helpful if you want to connect informal math to formal verification.",
     tags: ["math", "formalization", "reasoning"]
   },
   {
@@ -584,7 +584,7 @@ const resources = [
     type: "Resource list",
     audience: "Economists",
     summary: "A broad curated list of AI resources for economics and related research.",
-    useful: "Best onward path for participants who want many more links.",
+    useful: "The best place to go next for participants who want many more links.",
     tags: ["awesome list", "economics", "AI"]
   },
   {
@@ -596,7 +596,7 @@ const resources = [
     type: "Resource list",
     audience: "Economists",
     summary: "A categorized resource hub for AI in economics, including papers, tools, and teaching materials.",
-    useful: "Good complement to this page, especially for newer resources.",
+    useful: "Complements this page, especially for newer resources.",
     tags: ["economics", "resource hub", "LLMs"]
   },
   {
@@ -608,7 +608,7 @@ const resources = [
     type: "Resource list",
     audience: "Academics",
     summary: "A curated LinkedIn list of AI tools and references for academic research.",
-    useful: "Useful for people who want an expansive tool catalogue.",
+    useful: "For people who want a long catalogue of tools.",
     tags: ["resource list", "tools", "academia"]
   },
   {
@@ -632,7 +632,7 @@ const resources = [
     type: "Resource list",
     audience: "Economists",
     summary: "A practical page of research tools maintained by an economist.",
-    useful: "Useful broader context for integrating AI tools with standard research infrastructure.",
+    useful: "Broader context on how AI tools fit with standard research infrastructure.",
     tags: ["tools", "economics", "research"]
   },
   {
@@ -644,7 +644,7 @@ const resources = [
     type: "Tool",
     audience: "Economists",
     summary: "A tool for discovering and tracking economics papers.",
-    useful: "Good for combining AI-assisted reading with paper discovery.",
+    useful: "Pairs AI-assisted reading with finding new papers.",
     tags: ["papers", "discovery", "economics"]
   },
   {
@@ -656,7 +656,7 @@ const resources = [
     type: "Resource list",
     audience: "Economists and PhD students",
     summary: "A broad economics research resource page with sections on AI, Claude Code, coding-agent workflows, writing, publishing, refereeing, and data visualization.",
-    useful: "A strong second-stop resource after this page because it mixes AI-specific links with classic research craft advice.",
+    useful: "A strong second stop after this page, since it mixes AI-specific links with classic advice on research craft.",
     tags: ["resource list", "economics", "Claude Code"]
   },
   {
@@ -668,7 +668,7 @@ const resources = [
     type: "Paper",
     audience: "Researchers using LLMs for exploration",
     summary: "An arXiv paper proposing a decoding scheme for keeping LLM outputs diverse and creative across long exploratory search tasks.",
-    useful: "Useful for research ideation workflows where the goal is to explore many non-obvious alternatives rather than get one conventional answer.",
+    useful: "For research ideation, when you want to explore many non-obvious alternatives instead of one conventional answer.",
     tags: ["creativity", "exploratory search", "LLMs"]
   },
   {
@@ -680,7 +680,7 @@ const resources = [
     type: "Slides",
     audience: "Researchers and analysts",
     summary: "Slides on using AI to move from unstructured information to structured data.",
-    useful: "Practical demonstration topic for empirical researchers handling messy text.",
+    useful: "A practical demo for empirical researchers who work with messy text.",
     tags: ["structured data", "slides", "AI academy"]
   },
   {
@@ -691,7 +691,7 @@ const resources = [
     level: "Beginner",
     type: "Teaching",
     audience: "Teachers",
-    summary: "Teaching-oriented material on incorporating ChatGPT into classroom practice.",
+    summary: "Material on using ChatGPT in classroom teaching.",
     useful: "For participants interested in AI beyond research production.",
     tags: ["teaching", "ChatGPT", "classroom"]
   }
@@ -778,7 +778,7 @@ function render() {
         <p class="byline">${item.author} · ${item.audience}</p>
       </div>
       <p class="summary">${item.summary}</p>
-      <p class="useful"><strong>Use it for:</strong> ${item.useful}</p>
+      <p class="useful"><strong>Why it's here:</strong> ${item.useful}</p>
       <a href="${item.url}" target="_blank" rel="noreferrer">Open original source</a>
     </article>
   `).join("");

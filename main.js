@@ -1,4 +1,4 @@
-/* Vitali Gretschko — site interactions
+/* Vitali Gretschko: site interactions
    Theme · scrollspy · reveal · stats · blurbs from beyond · publications · palette */
 (function () {
   "use strict";
@@ -40,10 +40,10 @@
 
   /* ---------------- Skins (design switcher) ---------------- */
   var SKINS = [
-    { id: "corten", label: "Corten — warm paper & rust" },
-    { id: "blackboard", label: "Blackboard — chalk on slate" },
-    { id: "swiss", label: "Swiss — modernist grid" },
-    { id: "terminal", label: "Terminal — phosphor & mono" }
+    { id: "corten", label: "Corten (warm paper & rust)" },
+    { id: "blackboard", label: "Blackboard (chalk on slate)" },
+    { id: "swiss", label: "Swiss (modernist grid)" },
+    { id: "terminal", label: "Terminal (phosphor & mono)" }
   ];
   var skinBtn = doc.getElementById("skin-btn");
   var skinMenu = doc.getElementById("skin-menu");
@@ -198,7 +198,7 @@
     ta.style.opacity = "0";
     doc.body.appendChild(ta);
     ta.select();
-    try { doc.execCommand("copy"); toast(okMsg); } catch (e) { toast("Copy failed — sorry"); }
+    try { doc.execCommand("copy"); toast(okMsg); } catch (e) { toast("Copy failed, sorry"); }
     doc.body.removeChild(ta);
   }
 
@@ -344,9 +344,9 @@
   function buildCommands() {
     commands = [];
     // sections
-    [["top", "Top — Vitali Gretschko"], ["selected", "Selected Publications"], ["about", "About"],
-     ["research", "Research"], ["consulting", "Consulting & Policy"], ["teaching", "Teaching & Advising"],
-     ["tools", "Interactive Tools"], ["media", "In the Media"], ["contact", "Contact"]
+    [["top", "Top: Vitali Gretschko"], ["selected", "Selected publications"], ["about", "About"],
+     ["research", "Research"], ["consulting", "Consulting & policy"], ["teaching", "Teaching & advising"],
+     ["tools", "Interactive tools"], ["media", "In the media"], ["contact", "Contact"]
     ].forEach(function (s) {
       var el = doc.getElementById(s[0]);
       if (el) commands.push({
@@ -377,11 +377,11 @@
       ["SSRN author page", "link", function () { window.open("https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1953711", "_blank", "noopener"); }],
       ["RePEc / IDEAS profile", "link", function () { window.open("https://ideas.repec.org/f/pgr766.html", "_blank", "noopener"); }],
       ["LinkedIn", "link", function () { window.open("https://www.linkedin.com/in/vitali-gretschko/", "_blank", "noopener"); }],
-      ["GitHub — vgretschko", "link", function () { window.open("https://github.com/vgretschko", "_blank", "noopener"); }],
+      ["GitHub (vgretschko)", "link", function () { window.open("https://github.com/vgretschko", "_blank", "noopener"); }],
       ["University profile (Münster)", "link", function () { window.open("https://www.wiwi.uni-muenster.de/sumade/en/team/vitali-gretschko", "_blank", "noopener"); }],
       ["Play the Prisoner's Dilemma", "fun", function () { window.open("https://vgretschko.github.io/prisoners-dilemma-game/", "_blank", "noopener"); }],
-      ["AI for economic research — resource hub", "link", function () { window.location.href = "/ai-econ-research/"; }],
-      ["Straight-up version (one page, no frills)", "link", function () { window.location.href = "/simple/"; }],
+      ["AI for economic research (resource guide)", "link", function () { window.location.href = "/ai-econ-research/"; }],
+      ["Straight up (one page, no frills)", "link", function () { window.location.href = "/simple/"; }],
       ["Copy email address", "action", function () { copyText("vitali.gretschko@wiwi.uni-muenster.de", "Email address copied"); }],
       ["Toggle dark / light mode", "action", function () { applyTheme(currentTheme() === "dark" ? "light" : "dark", true); }],
       ["Next endorsement from beyond the grave", "fun", function () { if (blurbNextFn) blurbNextFn(); var b = doc.getElementById("blurbs"); if (b) b.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" }); }]
