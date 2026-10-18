@@ -131,6 +131,7 @@
   Object.keys(spyMap).forEach(function (id) { spy.observe(doc.getElementById(id)); });
 
   /* ---------------- Reveal on scroll ---------------- */
+  root.classList.add("reveal-live"); // cancels the CSS fallback that shows .reveal if this script never runs
   var revealEls = doc.querySelectorAll(".reveal");
   if (reducedMotion) {
     revealEls.forEach(function (el) { el.classList.add("visible"); });
