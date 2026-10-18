@@ -1,1 +1,17 @@
 .DS_Store
+
+# CV LaTeX source and build files stay local
+Supporting Documents/*.tex
+Supporting Documents/*.aux
+Supporting Documents/*.log
+Supporting Documents/*.out
+Supporting Documents/*.synctex.gz
+Supporting Documents/*.fls
+Supporting Documents/*.fdb_latexmk
+Supporting Documents/*.toc
+Supporting Documents/*.bbl
+Supporting Documents/*.blg
+Supporting Documents/*.bak
+
+# local tooling
+.claude/

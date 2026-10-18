@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vitali Gretschko — CV and Publications</title>
+  <meta name="description"
+    content="Vitali Gretschko, Professor of Economics at the University of Münster: CV and complete list of publications on auctions, mechanism design, and contracts." />
+  <link rel="canonical" href="https://vgretschko.github.io/simple/" />
+  <meta name="theme-color" content="#fdfcfa" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#151311" media="(prefers-color-scheme: dark)" />
+
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Vitali Gretschko — CV and Publications" />
+  <meta property="og:description"
+    content="Professor of Economics, Chair of Sustainable Market Design, University of Münster. Auctions, mechanism design, and contracts." />
+  <meta property="og:url" content="https://vgretschko.github.io/simple/" />
+  <meta property="og:image" content="https://vgretschko.github.io/assets/portrait.jpg" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <script>try { localStorage.setItem("vg-view", "simple"); } catch (e) { }</script>
+
+  <style>
+    :root {
+      --bg: #fdfcfa;
+      --bg-soft: #f5f1ea;
+      --ink: #1d1a16;
+      --muted: #5f574c;
+      --line: #e5dfd4;
+      --accent: #a84b21;
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      color-scheme: light dark;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #151311;
+        --bg-soft: #1e1a16;
+        --ink: #ece6dc;
+        --muted: #a99e8d;
+        --line: #322b23;
+        --accent: #e08a55;
+      }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      @view-transition { navigation: auto; }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 1rem/1.55 var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-underline-offset: 3px; }
+    a:hover { color: var(--accent); }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+    .skip { position: absolute; left: -999px; }
+    .skip:focus { left: 16px; top: 12px; padding: 6px 10px; background: var(--ink); color: var(--bg); }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 24px 40px;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 64px;
+    }
+
+    /* ---- Who ---- */
+    aside { position: sticky; top: 40px; align-self: start; }
+    @media (max-height: 40em) { aside { position: static; } }
+    .photo {
+      display: block;
+      width: 112px; height: 112px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 18px;
+    }
+    h1 { margin: 0; font: 400 2.1rem/1.08 var(--serif); letter-spacing: -0.01em; }
+    .role { margin: 10px 0 0; line-height: 1.45; }
+    .field { margin: 12px 0 0; color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+    .cv {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .cv:hover { color: #fff; filter: brightness(1.08); }
+    @media (prefers-color-scheme: dark) { .cv, .cv:hover { color: #1a0f08; } }
+    .links { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 4px; font-size: 0.95rem; }
+    .view { margin: 22px 0 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: 0.88rem; color: var(--muted); }
+
+    /* ---- Publications ---- */
+    main { min-width: 0; }
+    section + section { margin-top: 52px; }
+    h2 {
+      margin: 0 0 18px;
+      font: 600 0.78rem/1.2 var(--sans);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    h3 {
+      margin: 34px 0 6px;
+      font: 600 1.02rem/1.3 var(--sans);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    h3 .n { font-weight: 400; color: var(--muted); font-size: 0.88rem; }
+
+    .t { font: 400 1.14rem/1.32 var(--serif); text-decoration: none; text-wrap: pretty; }
+    .t:hover { text-decoration: underline; }
+    .v { display: block; margin-top: 3px; }
+    .v b { font-weight: 600; }
+    .w { display: block; color: var(--muted); font-size: 0.93rem; }
+    .de {
+      margin-left: 6px;
+      font: 600 0.66rem/1 var(--sans);
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 2px 4px;
+      vertical-align: 2px;
+    }
+
+    .top3 { list-style: none; margin: 0; padding: 0; counter-reset: top; }
+    .top3 li {
+      counter-increment: top;
+      position: relative;
+      padding: 0 0 18px 40px;
+    }
+    .top3 li + li { padding-top: 18px; border-top: 1px solid var(--line); }
+    .top3 li::before {
+      content: counter(top);
+      position: absolute;
+      left: 0;
+      font: 400 1.6rem/1 var(--serif);
+      color: var(--accent);
+    }
+    .top3 li + li::before { top: 18px; }
+    .top3 .t { font-size: 1.28rem; }
+
+    .feature {
+      padding: 22px 24px;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      background: var(--bg-soft);
+    }
+    .badge {
+      margin: 0 0 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .feature .t { display: block; font-size: 1.4rem; }
+    .feature .w { margin-top: 4px; }
+    .feature p { margin: 10px 0 0; }
+    .feature .abs { color: var(--muted); font-size: 0.95rem; max-width: 62ch; }
+
+    .jump { margin: -6px 0 0; font-size: 0.9rem; color: var(--muted); }
+    .jump a { margin-right: 14px; white-space: nowrap; }
+
+    .list { list-style: none; margin: 0; padding: 0; }
+    .list li {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+    }
+    .list li:first-child { border-top: 0; }
+    .y { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.95rem; padding-top: 2px; }
+    .list .t { font-size: 1.06rem; }
+    .list .v { font-size: 0.95rem; }
+
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 22px 24px 40px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px 24px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    footer p { margin: 0; }
+    footer nav { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+
+    @media (max-width: 860px) {
+      .wrap { grid-template-columns: 1fr; gap: 40px; padding: 28px 16px 32px; }
+      aside {
+        position: static;
+        display: grid;
+        grid-template-columns: 84px minmax(0, 1fr);
+        column-gap: 16px;
+        align-items: center;
+      }
+      aside > picture { grid-row: span 2; }
+      .photo { width: 84px; height: 84px; margin: 0; }
+      h1 { font-size: 1.8rem; }
+      .role { margin-top: 6px; font-size: 0.95rem; }
+      .field, .cv, .links, .view { grid-column: 1 / -1; }
+      .cv { justify-self: start; }
+      .links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+      footer { padding: 20px 16px 32px; }
+    }
+    @media (max-width: 480px) {
+      .feature { padding: 18px 16px; }
+      .list li { grid-template-columns: 40px minmax(0, 1fr); gap: 10px; }
+      .top3 li { padding-left: 32px; }
+    }
+
+    @media print {
+      .cv, .links, .view, .jump, .skip, footer nav { display: none; }
+      .wrap { display: block; padding: 0; }
+      aside { position: static; margin-bottom: 24px; }
+      .feature { background: none; }
+      a { text-decoration: none; }
+      .list li { break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#pubs">Skip to publications</a>
+
+  <div class="wrap">
+    <aside>
+      <picture>
+        <source srcset="../assets/portrait-square.webp" type="image/webp" />
+        <img class="photo" src="../assets/portrait-square.jpg" alt="Portrait of Vitali Gretschko" width="112"
+          height="112" />
+      </picture>
+      <h1>Vitali Gretschko</h1>
+      <p class="role">Professor of Economics<br>Chair of Sustainable Market Design<br>University of Münster</p>
+      <p class="field">Auctions, mechanism design, and contracts — in theory, in the lab, and in the field.</p>
+      <a class="cv" href="../Supporting%20Documents/CV.pdf">CV (PDF)</a>
+      <ul class="links">
+        <li><a href="mailto:vitali.gretschko@wiwi.uni-muenster.de">Email</a></li>
+        <li><a href="https://scholar.google.com/citations?user=HYlvMhkAAAAJ">Google Scholar</a></li>
+        <li><a href="https://www.wiwi.uni-muenster.de/sumade/en/team/vitali-gretschko">University profile</a></li>
+      </ul>
+      <p class="view"><a href="../fancy/">Fancy version →</a></p>
+    </aside>
+
+    <main id="pubs">
+      <section aria-labelledby="h-top">
+        <h2 id="h-top">Selected publications</h2>
+        <ol class="top3">
+          <li>
+            <a class="t" href="https://doi.org/10.3982/te4555">Worst-Case Equilibria in First-Price Auctions</a>
+            <span class="v"><b>Theoretical Economics</b> 19(1), 61–93, 2024</span>
+            <span class="w">with Helene Mass</span>
+          </li>
+          <li>
+            <a class="t" href="https://doi.org/10.1287/mnsc.2021.4123">Incomplete Contracts in Multi-period
+              Procurement</a>
+            <span class="v"><b>Management Science</b> 68(7), 5146–5161, 2022</span>
+            <span class="w">with Martin Pollrich</span>
+          </li>
+          <li>
+            <a class="t" href="https://doi.org/10.1016/j.jpubeco.2022.104701">Social Norms, Sanctions, and Conditional
+              Entry in Markets with Externalities: Evidence from an Artefactual Field Experiment</a>
+            <span class="v"><b>Journal of Public Economics</b> 212, 104701, 2022</span>
+            <span class="w">with Tobias Riehm, Nicolas Fugger, Philippe Gillen, Peter Werner</span>
+          </li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="h-wp">
+        <h2 id="h-wp">Working paper</h2>
+        <article class="feature">
+          <p class="badge">Revise &amp; resubmit · Journal of Political Economy</p>
+          <a class="t" href="../papers/stable-contracts-under-renegotiation.pdf">Stable Contracts under
+            Renegotiation</a>
+          <span class="w">with Achim Wambach · <a href="../papers/stable-contracts-under-renegotiation.pdf">PDF</a>,
+            October 2026</span>
+          <p class="abs">We study a principal contracting with a privately informed agent, where any contract is
+            subject to renegotiation. Rather than specifying a renegotiation game, we propose conditions that the set
+            of terminal outcomes of renegotiation must satisfy.</p>
+        </article>
+      </section>
+
+      <section aria-labelledby="h-all">
+        <h2 id="h-all">All other publications</h2>
+        <p class="jump">
+          <a href="#articles">Peer-reviewed</a>
+          <a href="#working">Working papers</a>
+          <a href="#chapters">Book chapters</a>
+          <a href="#policy">Policy &amp; reports</a>
+          <a href="#progress">In progress</a>
+        </p>
+
+        <h3 id="articles">Further peer-reviewed articles <span class="n">9</span></h3>
+        <ul class="list">
+          <li><span class="y">2022</span>
+            <div><a class="t" href="https://doi.org/10.1016/j.geb.2022.05.013">Information Design in Sequential
+                Procurement</a>
+              <span class="v"><b>Games and Economic Behavior</b> 135, 79–85</span>
+              <span class="w">with Nicolas Fugger, Martin Pollrich</span></div>
+          </li>
+          <li><span class="y">2020</span>
+            <div><a class="t" href="https://doi.org/10.1257/mic.20160250">Imitation Perfection — A Simple Rule to
+                Prevent Discrimination in Procurement</a>
+              <span class="v"><b>American Economic Journal: Microeconomics</b> 12(3), 189–245</span>
+              <span class="w">with Helene Mass, Nicolas Fugger, Achim Wambach</span></div>
+          </li>
+          <li><span class="y">2019</span>
+            <div><a class="t" href="https://doi.org/10.1628/jite-2019-0008">A Procurement Mechanism to Assign Refugee
+                Quotas</a>
+              <span class="v"><b>Journal of Institutional and Theoretical Economics</b> 175(1), 53–57</span>
+              <span class="w">single-authored</span></div>
+          </li>
+          <li><span class="y">2017</span>
+            <div><a class="t" href="https://doi.org/10.1016/j.telpol.2017.01.005">Bargaining in Spectrum Auctions: A
+                Review of the German Auction in 2015</a>
+              <span class="v"><b>Telecommunications Policy</b> 41(5–6), 325–340</span>
+              <span class="w">with Martin Bichler, Maarten Janssen</span></div>
+          </li>
+          <li><span class="y">2017</span>
+            <div><a class="t" href="https://doi.org/10.1007/s40505-016-0108-x">Pre-Auction or Post-Auction
+                Qualification?</a>
+              <span class="v"><b>Economic Theory Bulletin</b> 5(2), 139–150</span>
+              <span class="w">with Philippe Gillen, Alexander Rasch</span></div>
+          </li>
+          <li><span class="y">2016</span>
+            <div><a class="t" href="https://doi.org/10.1111/1756-2171.12159">Procurement under Public Scrutiny:
+                Auctions versus Negotiations</a>
+              <span class="v"><b>RAND Journal of Economics</b> 47(4), 914–934</span>
+              <span class="w">with Achim Wambach</span></div>
+          </li>
+          <li><span class="y">2015</span>
+            <div><a class="t" href="https://doi.org/10.1007/s10683-014-9406-z">Excess Information Acquisition in
+                Auctions</a>
+              <span class="v"><b>Experimental Economics</b> 18(3), 335–355</span>
+              <span class="w">with Alexander Rajko</span></div>
+          </li>
+          <li><span class="y">2014</span>
+            <div><a class="t" href="https://doi.org/10.1007/s00199-013-0766-y">Information Acquisition during a
+                Descending Auction</a>
+              <span class="v"><b>Economic Theory</b> 55(3), 731–751</span>
+              <span class="w">with Achim Wambach</span></div>
+          </li>
+          <li><span class="y">2014</span>
+            <div><a class="t" href="https://doi.org/10.1016/j.jmateco.2013.10.009">On the Strictly Descending
+                Multi-Unit Auction</a>
+              <span class="v"><b>Journal of Mathematical Economics</b> 50, 79–85</span>
+              <span class="w">with Alexander Rasch, Achim Wambach</span></div>
+          </li>
+        </ul>
+
+        <h3 id="working">Working papers <span class="n">4</span></h3>
+        <ul class="list">
+          <li><span class="y">2025</span>
+            <div><a class="t" href="https://www.zew.de/PU95635">Auctions vs. Negotiations: The Role of Communication
+                in an Experiment with Procurement Managers</a>
+              <span class="v"><b>ZEW Discussion Paper</b> 25-039</span>
+              <span class="w">with Nicolas Fugger, Philippe Gillen, Gian-Marco Kokott, Tobias Riehm</span></div>
+          </li>
+          <li><span class="y">2024</span>
+            <div><a class="t" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5096641">An Efficient Dynamic
+                Mechanism with Covert Information Acquisition</a>
+              <span class="v"><b>ZEW Discussion Paper</b> 24-081</span>
+              <span class="w">with Jasmina Simon</span></div>
+          </li>
+          <li><span class="y">2019</span>
+            <div><a class="t" href="https://www.zew.de/publikationen/sequential-procurement-with-limited-commitment">Sequential
+                Procurement with Limited Commitment</a>
+              <span class="v"><b>ZEW Discussion Paper</b> 19-030</span>
+              <span class="w">with Nicolas Fugger, Martin Pollrich</span></div>
+          </li>
+          <li><span class="y">2015</span>
+            <div><a class="t" href="https://hdl.handle.net/10419/113064">Common Values and the Coase Conjecture:
+                Inefficiencies in Frictionless Contract (Re-)Negotiation</a>
+              <span class="v"><b>Verein für Socialpolitik</b>, Annual Conference paper</span>
+              <span class="w">with Achim Wambach</span></div>
+          </li>
+        </ul>
+
+        <h3 id="chapters">Book chapters <span class="n">2</span></h3>
+        <ul class="list">
+          <li><span class="y">2018</span>
+            <div><a class="t" href="https://doi.org/10.1007/978-3-662-52882-2_23" lang="de">Nachhaltige
+                Geschäftsmodelle im Einkauf: Eine Fallstudie</a><span class="de" title="in German">DE</span>
+              <span class="v">in <b lang="de">CSR und Geschäftsmodelle</b>, Springer Gabler, 363–376</span>
+              <span class="w">with Florian Haas</span></div>
+          </li>
+          <li><span class="y">2017</span>
+            <div><a class="t" href="https://doi.org/10.1017/9781316471609.034">Bidding Complexities in the
+                Combinatorial Clock Auction</a>
+              <span class="v">in <b>Handbook of Spectrum Auction Design</b> (eds. M. Bichler, J. Goeree), Cambridge
+                University Press, 731–747</span>
+              <span class="w">with Stephan Knapek, Achim Wambach</span></div>
+          </li>
+        </ul>
+
+        <h3 id="policy">Policy articles &amp; reports <span class="n">10</span></h3>
+        <ul class="list">
+          <li><span class="y">2024</span>
+            <div><a class="t" href="https://doi.org/10.2478/wd-2024-0202" lang="de">Optimierung des
+                Verhandlungsgebots auf dem Telekommunikationsmarkt</a><span class="de" title="in German">DE</span>
+              <span class="v"><b>Wirtschaftsdienst</b> 104(11), 794–799</span>
+              <span class="w">with Axel Ockenfels, Achim Wambach</span></div>
+          </li>
+          <li><span class="y">2023</span>
+            <div><a class="t" href="https://doi.org/10.2478/wd-2023-0032" lang="de">Empfehlungen für das Marktdesign
+                zur Befüllung der Gasspeicher</a><span class="de" title="in German">DE</span>
+              <span class="v"><b>Wirtschaftsdienst</b> 103(2), 105–111</span>
+              <span class="w">with Axel Ockenfels</span></div>
+          </li>
+          <li><span class="y">2022</span>
+            <div><a class="t" href="https://collections.fes.de/publikationen/ident/fes/19491" lang="de">Bewertung
+                des Gasauktionsmodells</a><span class="de" title="in German">DE</span>
+              <span class="v"><b>FES diskurs</b>, Friedrich-Ebert-Stiftung</span>
+              <span class="w">with Julius Ecke, Tim Höfer</span></div>
+          </li>
+          <li><span class="y">2021</span>
+            <div><a class="t" href="https://doi.org/10.24406/fit-n-640928">Electricity Market Design 2030–2050:
+                Moving Towards Implementation</a>
+              <span class="v"><b>Kopernikus project SynErgie</b>, white paper</span>
+              <span class="w">with the SynErgie project group</span></div>
+          </li>
+          <li><span class="y">2021</span>
+            <div><a class="t"
+                href="https://www.zew.de/publikationen/stellungnahme-zu-grundsaetzen-und-szenarien-fuer-die-bereitstellung-der-mobilfunkfrequenzen"
+                lang="de">Stellungnahme zu Grundsätzen und Szenarien für die Bereitstellung der
+                Mobilfunkfrequenzen</a><span class="de" title="in German">DE</span>
+              <span class="v"><b>ZEW-Kurzexpertise</b> 21-07, for the Bundesnetzagentur</span>
+              <span class="w">with Achim Wambach</span></div>
+          </li>
+          <li><span class="y">2021</span>
+            <div><a class="t"
+                href="https://www.zew.de/publikationen/ein-flexibles-verguetungskonzept-fuer-mediziner-hilft-herdenimmunitaet-gegen-covid-19-zu-erreichen"
+                lang="de">Ein flexibles Vergütungskonzept für Mediziner hilft, Herdenimmunität gegen COVID-19 zu
+                erreichen</a><span class="de" title="in German">DE</span>
+              <span class="v"><b>ZEW policy brief</b> 21-03</span>
+              <span class="w">with Marion Ott</span></div>
+          </li>
+          <li><span class="y">2021</span>
+            <div><a class="t" href="https://doi.org/10.24406/fit-n-621457">Electricity Spot Market Design
+                2030–2050</a>
+              <span class="v"><b>Kopernikus project SynErgie</b>, white paper</span>
+              <span class="w">with the SynErgie project group</span></div>
+          </li>
+          <li><span class="y">2019</span>
+            <div><a class="t" href="https://doi.org/10.15358/0340-1650-2019-4-22" lang="de">Die Regeln machen den
+                Unterschied: Marktdesign</a><span class="de" title="in German">DE</span>
+              <span class="v"><b lang="de">WiSt — Wirtschaftswissenschaftliches Studium</b> 48(4), 22–28</span>
+              <span class="w">with Thilo Klein, Achim Wambach</span></div>
+          </li>
+          <li><span class="y">2016</span>
+            <div><a class="t" href="https://doi.org/10.1007/s10273-016-2026-9" lang="de">Beschaffungskonflikte:
+                Volkswagen und seine Zulieferer</a><span class="de" title="in German">DE</span>
+              <span class="v"><b>Wirtschaftsdienst</b> 96(9), 626–627</span>
+              <span class="w">with Nicolas Fugger, Philippe Gillen</span></div>
+          </li>
+          <li><span class="y">2013</span>
+            <div><a class="t" href="https://www.zew.de/PU78175">Spectrum Aggregation Limits in Auctions with Spectrum
+                below 1 GHz: The European Experience</a>
+              <span class="v"><b>Report filed with the FCC</b></span>
+              <span class="w">with Stephan Knapek, Achim Wambach</span></div>
+          </li>
+        </ul>
+
+        <h3 id="progress">Work in progress <span class="n">2</span></h3>
+        <ul class="list">
+          <li><span class="y">—</span>
+            <div><span class="t">Large Language Models and Dominant Strategies</span>
+              <span class="w">with Jasmina Simon</span></div>
+          </li>
+          <li><span class="y">—</span>
+            <div><span class="t">Auctions for Green Investment</span>
+              <span class="w">with Philip Zilke</span></div>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>Chair of Sustainable Market Design · University of Münster · Am Stadtgraben 9 · 48143 Münster ·
+      <a href="mailto:vitali.gretschko@wiwi.uni-muenster.de">vitali.gretschko@wiwi.uni-muenster.de</a></p>
+    <nav aria-label="Site">
+      <a href="../fancy/">Fancy version</a>
+      <a href="../?choose">Choose a view</a>
+      <a href="../impressum.html">Impressum &amp; Privacy</a>
+    </nav>
+  </footer>
+</body>
+
+</html>

@@ -196,6 +196,23 @@ kbd {
 .icon-btn:hover { border-color: var(--accent); color: var(--accent-strong); }
 .icon-btn:active { transform: scale(0.92); }
 
+.view-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--bg-elev);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.view-btn:hover { border-color: var(--accent); color: var(--accent-strong); }
+
 html[data-theme="dark"] .icon-sun { display: block; }
 html[data-theme="dark"] .icon-moon { display: none; }
 .icon-sun { display: none; }
@@ -1261,6 +1278,11 @@ html.js .reveal.visible { opacity: 1; transform: none; }
   .site-head-inner { padding: 0 16px; gap: 10px; }
   .media-list li { grid-template-columns: 1fr; gap: 2px; }
   .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* ---------- Cross-page transitions (chooser ↔ simple ↔ fancy) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
 }
 
 /* ---------- Reduced motion ---------- */
