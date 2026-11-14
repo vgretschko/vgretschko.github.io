@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vitali Gretschko · Chair Manager ’94 · The office</title>
+  <meta name="description"
+    content="The homepage of Vitali Gretschko (Chair of Sustainable Market Design, University of Münster) as a 1994 business simulation: a pixel-art professor’s office where the computer, the phone, the briefcase and the portrait on the wall are the menu." />
+  <link rel="canonical" href="https://vgretschko.github.io/office/" />
+  <meta name="theme-color" content="#0b0b12" />
+
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Vitali Gretschko · Chair Manager ’94" />
+  <meta property="og:description"
+    content="A professor’s homepage as a 1994 business simulation. Click around the office: publications on the computer, consulting in the briefcase, dead referees on the wall." />
+  <meta property="og:url" content="https://vgretschko.github.io/office/" />
+  <meta property="og:image" content="https://vgretschko.github.io/assets/portrait.jpg" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+
+  <script>
+    (function () {
+      document.documentElement.className += " js";
+      if (!location.hash) { try { localStorage.setItem("vg-view", "office"); } catch (e) { } }
+    })();
+  </script>
+
+  <style>
+    :root {
+      --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, "DejaVu Sans Mono", "Courier New", monospace;
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+      --navy: #1a2a7a;
+      --yellow: #ffe14a;
+      --panel: #c8c0a8;
+      --panel-hi: #f4eeda;
+      --panel-lo: #6b6450;
+      --paper: #efe9d6;
+      --ink: #1b1814;
+      --link: #1a2a7a;
+      --chrome: 124px;
+      color-scheme: dark;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: #0b0b12;
+      color: #e8e4d6;
+      font: 400 15px/1.55 var(--mono);
+    }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; }
+    [hidden] { display: none !important; }
+
+    /* ---------- HUD ---------- */
+    .hud {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 16px;
+      padding: 6px 12px;
+      background: var(--navy);
+      box-shadow: inset 0 2px 0 #4a5cc0, inset 0 -2px 0 #0c1440;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .hud-title {
+      margin: 0 auto 0 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--yellow);
+      text-shadow: 2px 2px 0 #000;
+    }
+    .hud-title small { display: inline-block; font-size: 11px; font-weight: 400; color: #c9d0f4; text-shadow: none; margin-left: 8px; }
+    @media (max-width: 560px) { .hud-title { flex-basis: 100%; } .hud-title small { display: block; margin-left: 0; } }
+    .hud-stat { white-space: nowrap; color: #c9d0f4; }
+    .hud-stat b { color: #fff; font-weight: 700; }
+    #hud-coffee { color: #ffb86a; letter-spacing: 1px; }
+    .hud-btn {
+      padding: 2px 8px;
+      background: var(--panel);
+      color: var(--ink);
+      border: 0;
+      box-shadow: inset 2px 2px 0 var(--panel-hi), inset -2px -2px 0 var(--panel-lo);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+    .hud-btn[aria-pressed="true"] { box-shadow: inset 2px 2px 0 var(--panel-lo), inset -2px -2px 0 var(--panel-hi); background: #b3ab92; }
+    .hud-btn:focus-visible, .btn:focus-visible, .win-x:focus-visible, .filter:focus-visible { outline: 2px dashed var(--yellow); outline-offset: 2px; }
+
+    /* ---------- the stage ---------- */
+    main { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .stage {
+      position: relative;
+      width: min(100%, calc((100vh - var(--chrome)) * 1.6));
+      width: min(100%, calc((100dvh - var(--chrome)) * 1.6));
+      aspect-ratio: 8 / 5;
+      margin: 0 auto;
+      background: #000;
+      cursor: crosshair;
+    }
+    #scene {
+      display: block;
+      width: 100%;
+      height: 100%;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+    }
+    #hotspots { position: absolute; inset: 0; }
+    .hs {
+      position: absolute;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      z-index: 1;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hs:focus { outline: none; }
+    .hs span {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 0 5px;
+      background: #000;
+      color: var(--yellow);
+      border: 1px solid var(--yellow);
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .hs-egg span { color: #c9d0f4; border-color: #6a78b0; font-size: 10px; }
+    .stage.hints .hs span { display: block; }
+    @media (max-width: 700px) {
+      .hs span { font-size: 9px; padding: 0 2px; line-height: 1.3; }
+      .stage.hints .hs-egg span { display: none; }
+    }
+
+    .status {
+      width: min(100%, calc((100vh - var(--chrome)) * 1.6));
+      width: min(100%, calc((100dvh - var(--chrome)) * 1.6));
+      margin: 0 auto;
+      min-height: 2.4em;
+      padding: 6px 12px;
+      background: #000;
+      color: var(--yellow);
+      border-top: 2px solid #2a2a3a;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    .status::before { content: "> "; color: #6a78b0; }
+
+    /* text menu: small screens, touch screens, no JavaScript */
+    .menu { display: none; padding: 10px 12px 4px; }
+    .menu h2 { margin: 0 0 8px; font-size: 12px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: #9aa3d8; }
+    .menu ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
+    .menu a {
+      display: block;
+      padding: 7px 10px;
+      background: var(--panel);
+      color: var(--ink);
+      box-shadow: inset 2px 2px 0 var(--panel-hi), inset -2px -2px 0 var(--panel-lo);
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .menu a small { display: block; font-size: 11px; color: #5a5340; }
+    @media (max-width: 760px), (hover: none) { .menu { display: block; } }
+    html:not(.js) .menu { display: block; }
+    html:not(.js) .stage, html:not(.js) .status, html:not(.js) .hud-btn { display: none; }
+
+    footer {
+      padding: 8px 12px 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2px 16px;
+      font-size: 12px;
+      color: #8a8fa8;
+    }
+    footer a:hover { color: var(--yellow); }
+
+    /* ---------- windows ---------- */
+    .win {
+      width: min(780px, calc(100vw - 16px));
+      max-width: none;
+      max-height: min(88vh, 860px);
+      max-height: min(88dvh, 860px);
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--ink);
+      overflow: visible;
+    }
+    .win::backdrop {
+      background:
+        repeating-conic-gradient(rgba(0, 0, 0, 0.72) 0% 25%, rgba(0, 0, 0, 0.5) 0% 50%) 0 0 / 4px 4px;
+    }
+    .win-frame {
+      display: flex;
+      flex-direction: column;
+      max-height: inherit;
+      padding: 5px;
+      background: var(--panel);
+      box-shadow: inset 2px 2px 0 var(--panel-hi), inset -2px -2px 0 var(--panel-lo), 0 0 0 2px #000, 8px 8px 0 rgba(0, 0, 0, 0.55);
+    }
+    .win-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 5px 5px 10px;
+      background: var(--navy);
+      color: var(--yellow);
+    }
+    .win-bar h2 {
+      flex: 1;
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 0 #000;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .win-x {
+      width: 24px;
+      height: 22px;
+      padding: 0;
+      border: 0;
+      background: var(--panel);
+      color: var(--ink);
+      box-shadow: inset 2px 2px 0 var(--panel-hi), inset -2px -2px 0 var(--panel-lo);
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .win-body {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      margin-top: 5px;
+      padding: 16px 18px 20px;
+      background: var(--paper);
+      box-shadow: inset 2px 2px 0 var(--panel-lo), inset -2px -2px 0 var(--panel-hi);
+      overscroll-behavior: contain;
+    }
+    .win-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 2px 1px; font-size: 12px; color: #4a4434; }
+    .btn {
+      display: inline-block;
+      padding: 5px 14px;
+      border: 0;
+      background: var(--panel);
+      color: var(--ink);
+      box-shadow: inset 2px 2px 0 var(--panel-hi), inset -2px -2px 0 var(--panel-lo), 0 0 0 1px #000;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn:active, .hud-btn:active, .win-x:active { box-shadow: inset 2px 2px 0 var(--panel-lo), inset -2px -2px 0 var(--panel-hi), 0 0 0 1px #000; }
+
+    /* ---------- panel content ---------- */
+    #panels { width: min(780px, 100%); margin: 0 auto; padding: 0 12px; }
+    .js #panels { display: none; }
+    html:not(.js) .panel { margin: 28px 0; padding: 16px 18px; background: var(--paper); color: var(--ink); }
+    .panel > .ph { margin: 0 0 12px; font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .js .panel > .ph { display: none; }
+    .panel { color: var(--ink); }
+    .panel p { margin: 0 0 0.9em; }
+    .panel h3 {
+      margin: 1.5em 0 0.6em;
+      padding-bottom: 3px;
+      border-bottom: 2px solid currentColor;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .panel h3:first-child { margin-top: 0; }
+    .panel h4 { margin: 0 0 0.3em; font-size: 15px; }
+    .panel a { color: var(--link); text-underline-offset: 2px; }
+    .panel a:hover { background: var(--yellow); color: #000; }
+    .panel ul, .panel ol { margin: 0 0 0.9em; padding-left: 1.3em; }
+    .tag { display: inline-block; padding: 0 6px; background: var(--ink); color: var(--paper); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+    .lede { font-size: 16px; }
+    .fine { font-size: 12.5px; color: #5a5340; }
+
+    /* personnel file */
+    .sheet { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+    .mugshot { flex: none; width: 128px; height: 128px; image-rendering: pixelated; box-shadow: 0 0 0 2px var(--ink), 4px 4px 0 rgba(0, 0, 0, 0.3); }
+    .stats { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; font-size: 14px; }
+    .stats dt { font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 0.06em; padding-top: 2px; }
+    .stats dd { margin: 0; }
+    .tl { list-style: none; padding: 0 !important; }
+    .tl li { display: grid; grid-template-columns: 5.2em 1fr; gap: 10px; padding: 4px 0; border-bottom: 1px dashed #a8a08a; }
+    .tl li span { font-weight: 700; }
+    .chips { list-style: none; padding: 0 !important; display: flex; flex-wrap: wrap; gap: 6px; }
+    .chips li { padding: 1px 8px; border: 1px solid var(--ink); font-size: 13px; }
+    @media (max-width: 520px) { .sheet { flex-direction: column; } }
+
+    /* cards (in-tray, client files) */
+    .card { margin: 0 0 12px; padding: 10px 12px; background: #fbf7ea; box-shadow: 0 0 0 1px #a8a08a, 3px 3px 0 rgba(0, 0, 0, 0.18); }
+    .card p:last-child { margin-bottom: 0; }
+    .card .meta { font-size: 13px; color: #4a4434; }
+    .stamp { display: inline-block; padding: 0 6px; border: 2px solid #b3261e; color: #b3261e; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; transform: rotate(-2deg); }
+    .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+    .grid2 .card { margin: 0; }
+
+    /* PUBLIST.EXE */
+    .win[data-skin="crt"] .win-body, html:not(.js) #research { background: #06140a; color: #59f07a; }
+    #research { color: #59f07a; }
+    #research a { color: #7ad8ff; }
+    #research a:hover { background: #7ad8ff; color: #000; }
+    #research h3 { color: #ffe14a; }
+    .prompt { color: #9af0aa; margin-bottom: 10px; }
+    .tools { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    .filter { padding: 1px 8px; background: none; border: 1px solid #59f07a; color: #59f07a; font-size: 13px; cursor: pointer; }
+    .filter[aria-pressed="true"] { background: #59f07a; color: #06140a; }
+    .searchrow { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .searchrow label { white-space: nowrap; }
+    #pub-search { flex: 1; min-width: 0; padding: 3px 6px; background: #0c2414; border: 1px solid #2f8a48; color: #c8ffd4; font: inherit; }
+    #pub-search:focus { outline: 2px solid #59f07a; }
+    #pub-count { white-space: nowrap; font-size: 13px; color: #9af0aa; }
+    .pubs { list-style: none; padding: 0 !important; }
+    .pub { display: grid; grid-template-columns: 3.4em 1fr; gap: 8px; padding: 6px 0; border-bottom: 1px dotted #2f8a48; }
+    .pub-y { color: #ffe14a; }
+    .pub-t { display: block; color: #d6ffe0; font-weight: 700; }
+    .pub-m { display: block; font-size: 13.5px; }
+    .pub .plink::before { content: "["; }
+    .pub .plink::after { content: "]"; }
+    .pub.flash { animation: flash 1.6s steps(4) 1; }
+    @keyframes flash { 0%, 50% { background: #1f5a30; } 25%, 75% { background: transparent; } }
+
+    /* blackboard */
+    .win[data-skin="chalk"] .win-body, html:not(.js) #teaching { background: #1f4a3a; color: #eef3ea; }
+    #teaching { color: #eef3ea; }
+    #teaching h3 { color: #f2e27a; border-bottom-style: dashed; }
+    #teaching a { color: #f2e27a; }
+    .courses { list-style: none; padding: 0 !important; }
+    .courses li { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; border-bottom: 1px dashed #5d8a78; }
+    .courses li span:last-child { color: #b9d2c6; white-space: nowrap; }
+
+    /* newspaper */
+    .win[data-skin="paper"] .win-body, html:not(.js) #media { background: #f1ecdf; }
+    #media { font-family: var(--serif); font-size: 16px; }
+    .masthead { margin: 0 0 4px; text-align: center; font: 700 30px/1.1 var(--serif); letter-spacing: 0.01em; }
+    .dateline { margin: 0 0 12px !important; padding: 3px 0; border-top: 3px double var(--ink); border-bottom: 1px solid var(--ink); text-align: center; font: 12px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+    #media .lede { font-style: italic; }
+    #media h3 { font-family: var(--mono); }
+    .clips { list-style: none; padding: 0 !important; columns: 2 260px; column-gap: 24px; }
+    .clips li { break-inside: avoid; padding: 4px 0; border-bottom: 1px solid #c9c2ae; }
+    .clips b { display: block; font: 700 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: #8c1c13; }
+    .pull { margin: 14px 0 0; padding: 10px 14px; border-left: 6px solid var(--ink); font-size: 20px; font-style: italic; }
+    .pull span { display: block; margin-top: 4px; font: 12.5px var(--mono); font-style: normal; }
+
+    /* portrait gallery */
+    .win[data-skin="gallery"] .win-body, html:not(.js) #quotes {
+      background: #3a1418 repeating-linear-gradient(90deg, transparent 0 14px, rgba(0, 0, 0, 0.16) 14px 16px);
+      color: #f1e6cf;
+    }
+    #quotes { color: #f1e6cf; }
+    #quotes a { color: var(--yellow); }
+    #quotes a:hover { background: var(--yellow); color: #000; }
+    .gallery { display: grid; grid-template-columns: 170px 1fr; gap: 20px; align-items: start; }
+    .frame {
+      padding: 10px;
+      background: #d9b23a;
+      box-shadow: inset 3px 3px 0 #f0d264, inset -3px -3px 0 #8a6a16, inset 6px 6px 0 #b08a22, inset -6px -6px 0 #b08a22, 0 0 0 2px #2a1c06, 6px 6px 0 rgba(0, 0, 0, 0.4);
+    }
+    #big-portrait { display: block; width: 150px; height: 190px; image-rendering: crisp-edges; image-rendering: pixelated; }
+    .js #quotes .blurb:not(.active) { display: none; }
+    .blurb { margin: 0 0 22px; }
+    .blurb blockquote { margin: 0 0 12px; font: 400 17px/1.5 var(--serif); }
+    .blurb-who { display: block; font-weight: 700; color: var(--yellow); letter-spacing: 0.04em; text-transform: uppercase; }
+    .blurb-bio { display: block; font-size: 13px; color: #d9c8a8; margin-bottom: 4px; }
+    .blurb-nav { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+    html:not(.js) .blurb-nav, html:not(.js) .frame { display: none; }
+    html:not(.js) .gallery { display: block; }
+    .disclaimer { font-size: 12.5px; color: #d9c8a8; }
+    @media (max-width: 560px) { .gallery { grid-template-columns: 1fr; } .frame { justify-self: center; } }
+
+    /* towel */
+    .win[data-skin="linen"] .win-body { background: #d9ccb0; text-align: center; }
+    #stitch { max-width: 100%; height: auto; box-shadow: 0 0 0 1px #a8997a, 5px 5px 0 rgba(0, 0, 0, 0.25); }
+    #stitch-caption { margin: 12px auto; max-width: 34em; font-size: 14px; }
+    .js #towel-list { display: none; }
+    html:not(.js) #stitch, html:not(.js) #towel-next { display: none; }
+
+    /* contact & small dialogs */
+    .dial { list-style: none; padding: 0 !important; }
+    .dial li { display: grid; grid-template-columns: 2.2em 1fr; gap: 8px; padding: 6px 0; border-bottom: 1px dashed #a8a08a; }
+    .dial li > b { display: inline-grid; place-items: center; width: 1.9em; height: 1.9em; background: #3d3d48; color: #fff; box-shadow: inset 1px 1px 0 #7a7a8a, inset -1px -1px 0 #1e1e26; font-size: 13px; }
+    .email { font-size: 17px; font-weight: 700; word-break: break-word; }
+    .doors { list-style: none; padding: 0 !important; display: grid; gap: 10px; }
+    .doors a { display: block; padding: 10px 12px; background: #fbf7ea; box-shadow: 0 0 0 1px #a8a08a, 3px 3px 0 rgba(0, 0, 0, 0.18); text-decoration: none; }
+    .doors a b { text-decoration: underline; }
+    .doors a span { display: block; font-size: 13px; color: #4a4434; }
+
+    @media (prefers-reduced-motion: reduce) { .pub.flash { animation: none; background: #1f5a30; } }
+  </style>
+</head>
+
+<body>
+  <header class="hud">
+    <h1 class="hud-title">Chair Manager ’94 <small>Prof. Dr. Vitali Gretschko · University of Münster</small></h1>
+    <span class="hud-stat" id="hud-date"></span>
+    <span class="hud-stat">Coffee <b id="hud-coffee">▮▮▮▮▮</b></span>
+    <span class="hud-stat">R&amp;R <b>1</b></span>
+    <button class="hud-btn" id="btn-hints" type="button" aria-pressed="false" title="Label everything you can click (H)">Hints</button>
+    <button class="hud-btn" id="btn-sound" type="button" aria-pressed="false">Sound: off</button>
+  </header>
+
+  <main>
+    <div class="stage" id="stage">
+      <canvas id="scene" width="320" height="200" role="img"
+        aria-label="Pixel-art view of a professor’s office: a desk with a computer, papers, a telephone and a newspaper; a blackboard, a gilt-framed portrait, an embroidered towel, a window onto Münster, a filing cabinet and a bookshelf. Each object opens a part of the homepage."></canvas>
+      <div id="hotspots"></div>
+    </div>
+    <p class="status" id="status" aria-hidden="true">Loading OFFICE.EXE …</p>
+
+    <nav class="menu" aria-label="Office inventory">
+      <h2>Inventory (in case clicking on furniture is not your thing)</h2>
+      <ul>
+        <li><a href="#about" data-panel="about">Diplomas<small>About</small></a></li>
+        <li><a href="#desk" data-panel="desk">Papers on the desk<small>Current work</small></a></li>
+        <li><a href="#research" data-panel="research">Computer<small>All publications</small></a></li>
+        <li><a href="#consulting" data-panel="consulting">Briefcase<small>Consulting &amp; policy</small></a></li>
+        <li><a href="#teaching" data-panel="teaching">Blackboard<small>Teaching &amp; advising</small></a></li>
+        <li><a href="#media" data-panel="media">Newspaper<small>In the media</small></a></li>
+        <li><a href="#contact" data-panel="contact">Telephone<small>Contact</small></a></li>
+        <li><a href="#quotes" data-panel="quotes">Portrait<small>Dead referees</small></a></li>
+        <li><a href="#towel" data-panel="towel">Embroidered towel<small>Wisdom</small></a></li>
+        <li><a href="#cv" data-panel="cv">Filing cabinet<small>CV</small></a></li>
+        <li><a href="#ai" data-panel="ai">Robot<small>AI × economics</small></a></li>
+        <li><a href="#exit" data-panel="exit">Door<small>Other views</small></a></li>
+      </ul>
+    </nav>
+
+    <noscript>
+      <p style="padding: 12px; color: #ffe14a;">The pixel office needs JavaScript (it is painted in code). Everything it contains is listed below; the <a href="../simple/">straight-up page</a> is the comfortable way to read it.</p>
+    </noscript>
+
+    <div id="panels">
+
+      <!-- ============ ABOUT ============ -->
+      <section class="panel" id="about" data-title="Personnel file: Gretschko, V.">
+        <h2 class="ph">About</h2>
+        <div class="sheet">
+          <img id="mugshot" class="mugshot" src="../assets/portrait-square.jpg" width="128" height="128" alt="Portrait of Vitali Gretschko" />
+          <dl class="stats">
+            <dt>Name</dt><dd>Prof. Dr. Vitali Gretschko</dd>
+            <dt>Class</dt><dd>Economic theorist (multiclass: experimentalist, market designer)</dd>
+            <dt>Guild</dt><dd>Chair of Sustainable Market Design, University of Münster</dd>
+            <dt>Skills</dt><dd>Auction theory · Mechanism design · Contracts</dd>
+            <dt>Special move</dt><dd>Designing the rules of markets so that self-interested people accidentally do the right thing</dd>
+          </dl>
+        </div>
+        <p class="lede">I am an economic theorist working on auctions, mechanism design, and contracts. Because theorems occasionally misbehave when exposed to actual humans, I also test them in the laboratory and deploy them in real-world markets.</p>
+        <p>Since 2023, I have held the Chair of Sustainable Market Design at the University of Münster. Before returning to Westphalia, I was a tenured Professor of Market Design at the University of Mannheim and headed the Market Design research group at ZEW Mannheim, where we spent seven years turning game theory into public policy and corporate strategy.</p>
+        <p>My research asks a simple question: How do the rules of the game shape the behavior of the players? Specifically, I study when auctions beat face-to-face negotiations (almost always, if you’re the buyer), how to write contracts when everyone knows they will be renegotiated five minutes later, why smart people pay for useless information, and how to stop procurement managers from quietly favoring their golf buddies. These papers have found homes in Management Science, AEJ: Microeconomics, Theoretical Economics, the RAND Journal of Economics, and the Journal of Public Economics.</p>
+        <p>Outside the ivory tower, the math stays the same, though the stakes have more zeros. I have advised telecom bidders and regulators in multibillion-euro spectrum auctions across Europe, designed allocation mechanisms for food banks and municipal kindergarten spots, and helped major industrial firms rethink how they buy and sell. I originally trained as a mathematician in Münster before defecting to economics for my doctorate in Cologne, with research stops at Yale, FU Berlin, and Bonn.</p>
+
+        <h3>Trajectory (save games)</h3>
+        <ol class="tl">
+          <li><span>2023–</span><div><b>Professor of Economics</b><br>Chair of Sustainable Market Design, University of Münster</div></li>
+          <li><span>2017–23</span><div><b>Professor of Market Design</b><br>University of Mannheim · tenured 2023</div></li>
+          <li><span>2016–23</span><div><b>Head, Market Design unit</b><br>ZEW (Leibniz Centre for European Economic Research)</div></li>
+          <li><span>2014–16</span><div><b>Akademischer Rat</b><br>University of Cologne</div></li>
+          <li><span>2013–14</span><div><b>Project manager</b><br>TWS Partners (market design &amp; negotiation strategy)</div></li>
+          <li><span>2011–12</span><div><b>Visiting researcher</b><br>Yale University (Fulbright)</div></li>
+          <li><span>2009–12</span><div><b>Doctorate in Economics</b><br>University of Cologne</div></li>
+          <li><span>2008–09</span><div><b>IT consultant</b><br>Accenture</div></li>
+          <li><span>2002–07</span><div><b>Diploma in Mathematics</b><br>University of Münster</div></li>
+        </ol>
+
+        <h3>Recognition (achievements unlocked)</h3>
+        <ul class="chips">
+          <li>Capital: “Top 40 unter 40”, 2021</li>
+          <li>Capital: Top 10 young economists, 2021</li>
+          <li>WirtschaftsWoche: “Next Generation”</li>
+          <li>Fulbright alumnus (Yale)</li>
+          <li>Liaison professor, Studienstiftung</li>
+        </ul>
+
+        <h3>Selected funders</h3>
+        <p>NWO · BMBF · Kopernikus / SynErgie (I &amp; II) · Volkswagen Stiftung · Leibniz Association · BMEL · European Commission (DG REFORM)</p>
+      </section>
+
+      <!-- ============ CURRENT WORK ============ -->
+      <section class="panel" id="desk" data-title="In-tray: current work">
+        <h2 class="ph">Current work and selected publications</h2>
+        <h3>On top of the pile</h3>
+        <article class="card">
+          <p><span class="stamp">Revise &amp; resubmit</span> at the <b>Journal of Political Economy</b></p>
+          <h4>Stable Contracts under Renegotiation</h4>
+          <p class="meta">with Achim Wambach</p>
+          <p>What happens when a principal writes a contract with a privately informed agent, and both know they can tear it up and renegotiate tomorrow? Instead of sensitivity-testing a fragile, specific bargaining protocol, we define the axioms that any stable set of renegotiation outcomes must satisfy. This lets us bound the exact cost of lacking commitment—and shows the principal how to get the best possible deal when her hands refuse to stay tied.</p>
+          <p><a href="../papers/stable-contracts-under-renegotiation.pdf" target="_blank" rel="noopener">PDF · Oct 2026</a></p>
+        </article>
+        <article class="card">
+          <p><span class="tag">Working paper</span> ZEW DP 25-039 (2025)</p>
+          <h4>Auctions vs. Negotiations: The Role of Communication</h4>
+          <p>Procurement managers love to tell you that “talking to suppliers builds trust and lowers prices.” We brought experienced procurement professionals into a controlled experiment to check. Spoiler: communication systematically raises prices. If you want a friendly chat, go to a bar; if you want low prices, hold a silent auction.</p>
+          <p><a href="https://www.zew.de/PU95635" target="_blank" rel="noopener">Paper</a></p>
+        </article>
+        <article class="card">
+          <p><span class="tag">In progress</span></p>
+          <h4>Large Language Models and Dominant Strategies</h4>
+          <p>with Jasmina Simon · Teaching silicon brains to play 80-year-old games, and figuring out why a trillion parameters still occasionally fall for the winner’s curse.</p>
+          <p><a href="#ai">Ask the robot on the bookshelf →</a></p>
+        </article>
+        <article class="card">
+          <p><span class="tag">In progress</span></p>
+          <h4>Auctions for Green Investment</h4>
+          <p class="meta">with Philip Zilke</p>
+        </article>
+
+        <h3>Selected publications</h3>
+        <article class="card">
+          <p class="meta"><b>Theoretical Economics</b> · 19(1), 61–93 (2024)</p>
+          <h4>Worst-Case Equilibria in First-Price Auctions</h4>
+          <p class="meta">with Helene Mass · <a href="https://doi.org/10.3982/te4555" target="_blank" rel="noopener">Paper</a></p>
+        </article>
+        <article class="card">
+          <p class="meta"><b>Management Science</b> · 68(7), 5146–5161 (2022)</p>
+          <h4>Incomplete Contracts in Multi-period Procurement</h4>
+          <p class="meta">with Martin Pollrich · <a href="https://doi.org/10.1287/mnsc.2021.4123" target="_blank" rel="noopener">Paper</a></p>
+        </article>
+        <article class="card">
+          <p class="meta"><b>Journal of Public Economics</b> · 212, 104701 (2022)</p>
+          <h4>Social Norms, Sanctions, and Conditional Entry in Markets with Externalities</h4>
+          <p class="meta">with Tobias Riehm, Nicolas Fugger, Philippe Gillen, Peter Werner · <a href="https://doi.org/10.1016/j.jpubeco.2022.104701" target="_blank" rel="noopener">Paper</a></p>
+        </article>
+        <p><a href="#research">Boot the computer for the full publication list (and check if your paper is cited) →</a></p>
+      </section>
+
+      <!-- ============ PUBLICATIONS ============ -->
+      <section class="panel" id="research" data-title="C:\PAPERS\PUBLIST.EXE" data-skin="crt">
+        <h2 class="ph">Publications</h2>
+        <p class="prompt">C:\PAPERS&gt; PUBLIST.EXE /ALL<br>GRETSCHKO PUBLICATION DATABASE v3.1 · 640K ought to be enough for anybody’s CV</p>
+        <div class="tools" role="toolbar" aria-label="Filter publications">
+          <button class="filter" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter" type="button" data-filter="journal" aria-pressed="false">Journal articles</button>
+          <button class="filter" type="button" data-filter="working" aria-pressed="false">Working papers</button>
+          <button class="filter" type="button" data-filter="progress" aria-pressed="false">In progress</button>
+          <button class="filter" type="button" data-filter="chapter" aria-pressed="false">Chapters</button>
+          <button class="filter" type="button" data-filter="policy" aria-pressed="false">Policy &amp; reports</button>
+        </div>
+        <div class="searchrow">
+          <label for="pub-search">FIND&gt;</label>
+          <input id="pub-search" type="search" placeholder="title, coauthor, journal, buzzword" autocomplete="off" spellcheck="false" />
+          <span id="pub-count" aria-live="polite"></span>
+        </div>
+        <div id="pub-list">
+          <h3 class="pub-group" data-group="journal">Journal articles</h3>
+          <ul class="pubs">
+            <li class="pub" data-kind="journal" id="pub-te2024"><span class="pub-y">2024</span><div><strong class="pub-t">Worst-Case Equilibria in First-Price Auctions</strong><span class="pub-m">with Helene Mass · <i>Theoretical Economics</i>, 19(1), 61–93 (2024)</span> <a class="plink" href="https://doi.org/10.3982/te4555" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal" id="pub-jpube2022"><span class="pub-y">2022</span><div><strong class="pub-t">Social Norms, Sanctions, and Conditional Entry in Markets with Externalities: Evidence from an Artefactual Field Experiment</strong><span class="pub-m">with Tobias Riehm, Nicolas Fugger, Philippe Gillen, Peter Werner · <i>Journal of Public Economics</i>, 212, 104701 (2022)</span> <a class="plink" href="https://doi.org/10.1016/j.jpubeco.2022.104701" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal" id="pub-ms2022"><span class="pub-y">2022</span><div><strong class="pub-t">Incomplete Contracts in Multi-period Procurement</strong><span class="pub-m">with Martin Pollrich · <i>Management Science</i>, 68(7), 5146–5161 (2022)</span> <a class="plink" href="https://doi.org/10.1287/mnsc.2021.4123" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal"><span class="pub-y">2022</span><div><strong class="pub-t">Information Design in Sequential Procurement</strong><span class="pub-m">with Nicolas Fugger, Martin Pollrich · <i>Games and Economic Behavior</i>, 135, 79–85 (2022)</span> <a class="plink" href="https://doi.org/10.1016/j.geb.2022.05.013" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal" id="pub-aej2020"><span class="pub-y">2020</span><div><strong class="pub-t">Imitation Perfection — A Simple Rule to Prevent Discrimination in Procurement</strong><span class="pub-m">with Helene Mass, Nicolas Fugger, Achim Wambach · <i>American Economic Journal: Microeconomics</i>, 12(3), 189–245 (2020)</span> <a class="plink" href="https://doi.org/10.1257/mic.20160250" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal"><span class="pub-y">2019</span><div><strong class="pub-t">A Procurement Mechanism to Assign Refugee Quotas</strong><span class="pub-m"><i>Journal of Institutional and Theoretical Economics</i>, 175(1), 53–57 (2019)</span> <a class="plink" href="https://doi.org/10.1628/jite-2019-0008" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal" id="pub-tp2017"><span class="pub-y">2017</span><div><strong class="pub-t">Bargaining in Spectrum Auctions: A Review of the German Auction in 2015</strong><span class="pub-m">with Martin Bichler, Maarten Janssen · <i>Telecommunications Policy</i>, 41(5–6), 325–340 (2017)</span> <a class="plink" href="https://doi.org/10.1016/j.telpol.2017.01.005" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal"><span class="pub-y">2017</span><div><strong class="pub-t">Pre-Auction or Post-Auction Qualification?</strong><span class="pub-m">with Philippe Gillen, Alexander Rasch · <i>Economic Theory Bulletin</i>, 5(2), 139–150 (2017)</span> <a class="plink" href="https://doi.org/10.1007/s40505-016-0108-x" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal" id="pub-rand2016"><span class="pub-y">2016</span><div><strong class="pub-t">Procurement under Public Scrutiny: Auctions versus Negotiations</strong><span class="pub-m">with Achim Wambach · <i>RAND Journal of Economics</i>, 47(4), 914–934 (2016)</span> <a class="plink" href="https://doi.org/10.1111/1756-2171.12159" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal" id="pub-ee2015"><span class="pub-y">2015</span><div><strong class="pub-t">Excess Information Acquisition in Auctions</strong><span class="pub-m">with Alexander Rajko · <i>Experimental Economics</i>, 18(3), 335–355 (2015)</span> <a class="plink" href="https://doi.org/10.1007/s10683-014-9406-z" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal" id="pub-et2014"><span class="pub-y">2014</span><div><strong class="pub-t">Information Acquisition during a Descending Auction</strong><span class="pub-m">with Achim Wambach · <i>Economic Theory</i>, 55(3), 731–751 (2014)</span> <a class="plink" href="https://doi.org/10.1007/s00199-013-0766-y" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="journal"><span class="pub-y">2014</span><div><strong class="pub-t">On the Strictly Descending Multi-Unit Auction</strong><span class="pub-m">with Alexander Rasch, Achim Wambach · <i>Journal of Mathematical Economics</i>, 50, 79–85 (2014)</span> <a class="plink" href="https://doi.org/10.1016/j.jmateco.2013.10.009" target="_blank" rel="noopener">Paper</a></div></li>
+          </ul>
+          <h3 class="pub-group" data-group="working">Working papers</h3>
+          <ul class="pubs">
+            <li class="pub" data-kind="working" id="pub-stable"><span class="pub-y">R&amp;R</span><div><strong class="pub-t">Stable Contracts under Renegotiation</strong><span class="pub-m">with Achim Wambach · revise &amp; resubmit, <i>Journal of Political Economy</i> · draft October 2026</span> <a class="plink" href="../papers/stable-contracts-under-renegotiation.pdf" target="_blank" rel="noopener">PDF</a></div></li>
+            <li class="pub" data-kind="working" id="pub-avn"><span class="pub-y">2025</span><div><strong class="pub-t">Auctions vs. Negotiations: The Role of Communication in an Experiment with Procurement Managers</strong><span class="pub-m">with Nicolas Fugger, Philippe Gillen, Gian-Marco Kokott, Tobias Riehm · ZEW Discussion Paper 25-039 (2025)</span> <a class="plink" href="https://www.zew.de/PU95635" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="working"><span class="pub-y">2024</span><div><strong class="pub-t">An Efficient Dynamic Mechanism with Covert Information Acquisition</strong><span class="pub-m">with Jasmina Simon · ZEW Discussion Paper 24-081 (2024)</span> <a class="plink" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5096641" target="_blank" rel="noopener">SSRN</a></div></li>
+            <li class="pub" data-kind="working"><span class="pub-y">2019</span><div><strong class="pub-t">Sequential Procurement with Limited Commitment</strong><span class="pub-m">with Nicolas Fugger, Martin Pollrich · ZEW Discussion Paper 19-030 (2019)</span> <a class="plink" href="https://www.zew.de/publikationen/sequential-procurement-with-limited-commitment" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="working"><span class="pub-y">2015</span><div><strong class="pub-t">Common Values and the Coase Conjecture: Inefficiencies in Frictionless Contract (Re-)Negotiation</strong><span class="pub-m">with Achim Wambach · VfS Annual Conference (2015)</span> <a class="plink" href="https://hdl.handle.net/10419/113064" target="_blank" rel="noopener">Paper</a></div></li>
+          </ul>
+          <h3 class="pub-group" data-group="progress">Work in progress</h3>
+          <ul class="pubs">
+            <li class="pub" data-kind="progress"><span class="pub-y">···</span><div><strong class="pub-t">Large Language Models and Dominant Strategies</strong><span class="pub-m">with Jasmina Simon · work in progress</span></div></li>
+            <li class="pub" data-kind="progress"><span class="pub-y">···</span><div><strong class="pub-t">Auctions for Green Investment</strong><span class="pub-m">with Philip Zilke · work in progress</span></div></li>
+          </ul>
+          <h3 class="pub-group" data-group="chapter">Book chapters</h3>
+          <ul class="pubs">
+            <li class="pub" data-kind="chapter"><span class="pub-y">2018</span><div><strong class="pub-t" lang="de">Nachhaltige Geschäftsmodelle im Einkauf: Eine Fallstudie</strong><span class="pub-m">with Florian Haas · in <i lang="de">CSR und Geschäftsmodelle</i>, Springer Gabler, 363–376 (2018)</span> <a class="plink" href="https://doi.org/10.1007/978-3-662-52882-2_23" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="chapter"><span class="pub-y">2017</span><div><strong class="pub-t">Bidding Complexities in the Combinatorial Clock Auction</strong><span class="pub-m">with Stephan Knapek, Achim Wambach · in <i>Handbook of Spectrum Auction Design</i> (eds. M. Bichler, J. Goeree), Cambridge University Press, 731–747 (2017)</span> <a class="plink" href="https://doi.org/10.1017/9781316471609.034" target="_blank" rel="noopener">Paper</a></div></li>
+          </ul>
+          <h3 class="pub-group" data-group="policy">Policy &amp; reports</h3>
+          <ul class="pubs">
+            <li class="pub" data-kind="policy"><span class="pub-y">2024</span><div><strong class="pub-t" lang="de">Optimierung des Verhandlungsgebots auf dem Telekommunikationsmarkt</strong><span class="pub-m">with Axel Ockenfels, Achim Wambach · <i>Wirtschaftsdienst</i>, 104(11), 794–799 (2024)</span> <a class="plink" href="https://doi.org/10.2478/wd-2024-0202" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="policy"><span class="pub-y">2023</span><div><strong class="pub-t" lang="de">Empfehlungen für das Marktdesign zur Befüllung der Gasspeicher</strong><span class="pub-m">with Axel Ockenfels · <i>Wirtschaftsdienst</i>, 103(2), 105–111 (2023)</span> <a class="plink" href="https://doi.org/10.2478/wd-2023-0032" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="policy"><span class="pub-y">2022</span><div><strong class="pub-t" lang="de">Bewertung des Gasauktionsmodells</strong><span class="pub-m">with Julius Ecke, Tim Höfer · FES diskurs, Friedrich-Ebert-Stiftung (2022)</span> <a class="plink" href="https://collections.fes.de/publikationen/ident/fes/19491" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="policy"><span class="pub-y">2021</span><div><strong class="pub-t">Electricity Market Design 2030–2050: Moving Towards Implementation</strong><span class="pub-m">SynErgie project group · White paper (2021)</span> <a class="plink" href="https://doi.org/10.24406/fit-n-640928" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="policy"><span class="pub-y">2021</span><div><strong class="pub-t" lang="de">Stellungnahme zu Grundsätzen und Szenarien für die Bereitstellung der Mobilfunkfrequenzen</strong><span class="pub-m">with Achim Wambach · ZEW-Kurzexpertise 21-07, response to the Bundesnetzagentur’s 2021 scenario paper (2021)</span> <a class="plink" href="https://www.zew.de/publikationen/stellungnahme-zu-grundsaetzen-und-szenarien-fuer-die-bereitstellung-der-mobilfunkfrequenzen" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="policy"><span class="pub-y">2021</span><div><strong class="pub-t" lang="de">Ein flexibles Vergütungskonzept für Mediziner hilft, Herdenimmunität gegen COVID-19 zu erreichen</strong><span class="pub-m">with Marion Ott · ZEW policy brief 21-03 (2021)</span> <a class="plink" href="https://www.zew.de/publikationen/ein-flexibles-verguetungskonzept-fuer-mediziner-hilft-herdenimmunitaet-gegen-covid-19-zu-erreichen" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="policy"><span class="pub-y">2021</span><div><strong class="pub-t">Electricity Spot Market Design 2030–2050</strong><span class="pub-m">SynErgie project group · White paper (2021)</span> <a class="plink" href="https://doi.org/10.24406/fit-n-621457" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="policy"><span class="pub-y">2019</span><div><strong class="pub-t" lang="de">Die Regeln machen den Unterschied: Marktdesign</strong><span class="pub-m">with Thilo Klein, Achim Wambach · <i lang="de">Wirtschaftswissenschaftliches Studium (WiSt)</i>, 48(4), 22–28 (2019)</span> <a class="plink" href="https://doi.org/10.15358/0340-1650-2019-4-22" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="policy"><span class="pub-y">2016</span><div><strong class="pub-t" lang="de">Beschaffungskonflikte: Volkswagen und seine Zulieferer</strong><span class="pub-m">with Nicolas Fugger, Philippe Gillen · <i>Wirtschaftsdienst</i>, 96(9), 626–627 (2016)</span> <a class="plink" href="https://doi.org/10.1007/s10273-016-2026-9" target="_blank" rel="noopener">Paper</a></div></li>
+            <li class="pub" data-kind="policy"><span class="pub-y">2013</span><div><strong class="pub-t">Spectrum Aggregation Limits in Auctions with Spectrum below 1 GHz: The European Experience</strong><span class="pub-m">with Stephan Knapek, Achim Wambach · filed with the FCC (2013)</span> <a class="plink" href="https://www.zew.de/PU78175" target="_blank" rel="noopener">Paper</a></div></li>
+          </ul>
+        </div>
+        <p id="pub-empty" hidden>File not found. Empty set (∅). Even with unrestricted beliefs, nothing matches that query.</p>
+        <p style="margin-top: 14px"><a href="https://scholar.google.com/citations?user=HYlvMhkAAAAJ" target="_blank" rel="noopener">All publications on Google Scholar →</a></p>
+      </section>
+
+      <!-- ============ CONSULTING ============ -->
+      <section class="panel" id="consulting" data-title="Briefcase: consulting &amp; policy">
+        <h2 class="ph">Consulting &amp; policy</h2>
+        <p class="lede">For the past fifteen years, I have helped bidders, regulators, ministries, and corporations translate mechanism design into better rules and sharper bidding strategies. If you have an allocation problem, a high-stakes auction, or a procurement system that isn’t behaving, <a href="mailto:vitali.gretschko@wiwi.uni-muenster.de">my inbox is open.</a></p>
+        <div class="grid2">
+          <article class="card">
+            <h4>▚ Spectrum auctions</h4>
+            <p>Advised telecom operators and regulators in high-stakes frequency auctions across Germany, Luxembourg, Poland, and Georgia, alongside an FCC filing on spectrum aggregation limits for the US incentive auction.</p>
+          </article>
+          <article class="card">
+            <h4>▚ Energy &amp; climate</h4>
+            <p>Advised bidders in Germany’s coal phase-out auctions and in UK and US offshore-wind lease auctions. Co-designed market rules for emergency gas storage and the 2030–2050 electricity market, because decarbonization is hard enough without bad auction formats.</p>
+          </article>
+          <article class="card">
+            <h4>▚ Industry &amp; strategic procurement</h4>
+            <p>Applied game theory, negotiation design, and B2B procurement architecture for BMW, Porsche, BOSCH, Mann + Hummel, Cimpress, and others—saving clients from the expensive habit of winging it.</p>
+          </article>
+          <article class="card">
+            <h4>▚ Public sector &amp; social markets</h4>
+            <p>Markets don’t always need money to clear. I helped design fair allocation mechanisms for food bank donations (Tafel Deutschland) and municipal kindergarten places, as well as public construction procurement (BBSR) and digital identity ecosystems (Federal Chancellery).</p>
+          </article>
+          <article class="card">
+            <h4>▚ Governments &amp; international institutions</h4>
+            <p>Optimized the bulk procurement of millions of textbooks for Brazil’s public school system, helped reform the Swedish Public Employment Service (with the OECD and EU DG REFORM), and advised the Georgian telecom regulator.</p>
+          </article>
+          <article class="card">
+            <h4>▚ Media &amp; sports rights</h4>
+            <p>Advised a major broadcaster in the 2016 Bundesliga TV rights auction—an environment where a single tweak to the tie-breaking or package rules can swing the price by hundreds of millions of euros.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ TEACHING ============ -->
+      <section class="panel" id="teaching" data-title="Blackboard: teaching &amp; advising" data-skin="chalk">
+        <h2 class="ph">Teaching &amp; advising</h2>
+        <h3>University of Münster</h3>
+        <ul class="courses">
+          <li><span>Game Theory</span><span>SS 2025</span></li>
+          <li><span>Introduction to Microeconomics</span><span>WS 2025/26</span></li>
+          <li><span>Seminar: Experiments with Artificial Intelligence</span><span>WS 2025/26</span></li>
+          <li><span>Resource Economics</span><span>WS 2023–26</span></li>
+          <li><span>Environmental Economics + Seminar</span><span>SS 2024, SS 2025</span></li>
+          <li><span>Strategic Procurement</span><span>WS 2024/25</span></li>
+        </ul>
+        <p>Prior to Münster, I taught Market Design, Auction Theory, and Game Theory across the Bachelor, Master, and PhD levels at Mannheim and Cologne.</p>
+        <h3>Executive education</h3>
+        <p>Teaching executives at BMW, BOSCH, Infineon, Schaeffler, Mann + Hummel, Cimpress, and TWS Partners how to think backwards from the equilibrium—and why “splitting the difference” is rarely a Nash equilibrium.</p>
+        <h3>Beyond the lecture hall</h3>
+        <p>Liaison professor (Vertrauensdozent) for the Studienstiftung des deutschen Volkes; regular referee for the AER, JPE, Econometrica, Management Science, and a dozen other journals (yes, I am usually Referee 2, but the constructive version); co-organizer of the Virtual Market Design Seminar (2020–2024).</p>
+        <h3>PhD students &amp; alumni</h3>
+        <ul class="courses">
+          <li><span><b>Philip Zilke</b></span><span>since 2021</span></li>
+          <li><span><b>Jasmina Simon</b></span><span>since 2020</span></li>
+          <li><span><b>Chang Liu</b> → Central University of Finance and Economics</span><span>2021–2025</span></li>
+          <li><span><b>Tobias Riehm</b> → strategy consulting</span><span>2017–2022</span></li>
+        </ul>
+      </section>
+
+      <!-- ============ MEDIA ============ -->
+      <section class="panel" id="media" data-title="Newspaper: in the media" data-skin="paper">
+        <h2 class="ph">In the media</h2>
+        <p class="masthead">The Market Design Gazette</p>
+        <p class="dateline">Late edition · Münster · Price: one sealed bid</p>
+        <p class="lede">Occasional public interventions on 5G billion-euro bidding wars, energy market panics, vaccine incentives, and why blaming “greed” is usually just a lazy substitute for fixing the market rules.</p>
+        <h3>German press</h3>
+        <ul class="clips">
+          <li><b>Capital</b><span lang="de">Junge Elite 2021: Die Top 10 Nachwuchsökonomen</span></li>
+          <li><b>Capital</b><span lang="de">Top 40 unter 40: Capital kürt die Junge Elite 2021</span></li>
+          <li><b>Handelsblatt</b><span lang="de">Wie Prämien die Corona-Impfungen deutlich beschleunigen könnten</span></li>
+          <li><b>Handelsblatt</b><span lang="de">Bieterschlacht der Telkoriesen</span></li>
+          <li><b>FAZ</b><span lang="de">Von der Analyse zum Design der Märkte</span></li>
+          <li><b>Süddeutsche</b><span lang="de">Finale im Milliardenspiel</span></li>
+          <li><b>Süddeutsche</b><span lang="de">Mobiles Internet für alle, aber richtig</span></li>
+          <li><b>Welt</b><span lang="de">„Kevin Kühnert hat das richtige Gespür“</span></li>
+          <li><b>WiWo</b><span lang="de">Vorschlag von Ökonomen: So erreichen wir Herdenimmunität</span></li>
+          <li><b>WiWo</b><span lang="de">Die Mär von der totalen Transparenz</span></li>
+          <li><b>WiWo</b><span lang="de">Plötzlich nützlich — Der Volkswirt</span></li>
+          <li><b>Tagesspiegel</b><span lang="de">Die Lizenz zum Schnellsurfen</span></li>
+          <li><b>Tagesspiegel</b><span lang="de">Gasauktionen helfen nicht beim Sparen</span></li>
+          <li><b>Börsen-Zeitung</b><span lang="de">Warum eine zeitnahe Mobilfunkauktion Vorzüge hat</span></li>
+          <li><b>Bild</b><span lang="de">Was wurde eigentlich aus der 5G-Auktion?</span></li>
+        </ul>
+        <h3>French press</h3>
+        <ul class="clips">
+          <li><b>Le Monde</b><span lang="fr">« Dans une société qui utilise les enchères au quotidien, l’originalité des travaux de Paul Milgrom et Robert Wilson nous est précieuse »</span></li>
+          <li><b>Les Échos</b><span lang="fr">Droits TV du football français : un coûteux hors-jeu</span></li>
+          <li><b>Les Échos</b><span lang="fr">L’attribution des fréquences 5G, une déception sans surprise</span></li>
+          <li><b>Les Échos</b><span lang="fr">Méthode d’attribution des fréquences 5G : des choix discutables</span></li>
+          <li><b>Les Échos</b><span lang="fr">Allemagne : ces enchères 5G qui n’en finissent plus…</span></li>
+          <li><b>Les Échos</b><span lang="fr">En Allemagne, la 5G a déjà rapporté plus de 5 milliards</span></li>
+        </ul>
+        <p class="pull">“Die Regeln machen den Unterschied.” (The rules make the difference.)<span>— The one takeaway I have been trying to sneak into every article since 2019. <a href="#towel">It is also on the towel.</a></span></p>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section class="panel" id="contact" data-title="Telephone: contact">
+        <h2 class="ph">Contact</h2>
+        <p>For academic collaborations, keynote talks, or consulting inquiries (repeated games preferred):</p>
+        <p class="email"><a href="mailto:vitali.gretschko@wiwi.uni-muenster.de">vitali.gretschko@<wbr>wiwi.uni-muenster.de</a></p>
+        <h3>Speed dial</h3>
+        <ul class="dial">
+          <li><b>1</b><div><a href="tel:+492518325007">+49 251 83-25007</a><br><span class="fine">An actual telephone. It rings in this very office.</span></div></li>
+          <li><b>2</b><div>Chair of Sustainable Market Design<br>University of Münster<br>Am Stadtgraben 9, Room 7<br>48143 Münster, Germany</div></li>
+          <li><b>3</b><div><a href="https://scholar.google.com/citations?user=HYlvMhkAAAAJ" target="_blank" rel="noopener">Google Scholar</a></div></li>
+          <li><b>4</b><div><a href="https://ideas.repec.org/f/pgr766.html" target="_blank" rel="noopener">RePEc / IDEAS</a></div></li>
+          <li><b>5</b><div><a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1953711" target="_blank" rel="noopener">SSRN</a></div></li>
+          <li><b>6</b><div><a href="https://www.linkedin.com/in/vitali-gretschko/" target="_blank" rel="noopener">LinkedIn</a></div></li>
+          <li><b>7</b><div><a href="https://github.com/vgretschko" target="_blank" rel="noopener">GitHub</a></div></li>
+          <li><b>8</b><div><a href="https://www.wiwi.uni-muenster.de/sumade/en/team/vitali-gretschko" target="_blank" rel="noopener">University profile</a></div></li>
+          <li><b>9</b><div><a href="../Supporting%20Documents/CV.pdf" download>Curriculum vitae (PDF)</a></div></li>
+        </ul>
+      </section>
+
+      <!-- ============ QUOTES ============ -->
+      <section class="panel" id="quotes" data-title="Portrait gallery: peer review from beyond the grave" data-skin="gallery">
+        <h2 class="ph">Peer review from beyond the grave</h2>
+        <div class="gallery">
+          <div class="frame"><canvas id="big-portrait" width="30" height="38" role="img" aria-label="Pixel portrait"></canvas></div>
+          <div>
+            <figure class="blurb active">
+              <blockquote>“I doubled the size of the United States in a backroom negotiation and only informed Congress once the receipt was signed. Gretschko &amp; Wambach prove precisely why that worked: when nobody is watching, a buyer can strike the deal of the millennium. If Congress is watching you, however, do yourself a favor and run an auction.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Thomas Jefferson</span>
+                <span class="blurb-bio">1743–1826 · Third President of the United States, enthusiastic real estate buyer</span>
+                <a href="#pub-rand2016">on “Procurement under Public Scrutiny” · RAND 2016 →</a>
+              </figcaption>
+            </figure>
+            <figure class="blurb">
+              <blockquote>“Jefferson still thinks he got a bargain? Cute. I kept his envoys chatting over wine until they paid fifty million francs for swamp land I didn’t even control. As Fugger, Gillen, Gretschko, Kokott &amp; Riehm demonstrate in the lab, letting buyers and sellers talk systematically drives up the price—even when the buyers are seasoned professionals. Sellers: never shut up.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Napoleon Bonaparte</span>
+                <span class="blurb-bio">1769–1821 · Emperor of the French, distressed-asset liquidator</span>
+                <a href="#pub-avn">on “Auctions vs. Negotiations: The Role of Communication” →</a>
+              </figcaption>
+            </figure>
+            <figure class="blurb">
+              <blockquote>“Six marriage contracts, and not a single one of them renegotiation-proof. Had Gretschko &amp; Wambach been around to characterize the stable set of terminal outcomes before I walked down the aisle, England might have been spared a constitutional crisis, a break with Rome, and considerable wear and tear on the Tower green.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Henry VIII</span>
+                <span class="blurb-bio">1491–1547 · King of England, serial contract terminator</span>
+                <a href="#pub-stable">on “Stable Contracts under Renegotiation” · R&amp;R, JPE →</a>
+              </figcaption>
+            </figure>
+            <figure class="blurb">
+              <blockquote>“I famously advised generals to know their enemy. Regrettably, I left out what to do when you have no idea what your enemy even believes about your beliefs. Gretschko &amp; Mass finally close the gap: optimize against the worst-case belief distribution and you cannot be ambushed. The supreme art of bidding is profiting from your own epistemic ignorance.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Sun Tzu</span>
+                <span class="blurb-bio">c. 544–496 BC · General, strategist, early adopter of maxmin expected utility</span>
+                <a href="#pub-te2024">on “Worst-Case Equilibria in First-Price Auctions” · Theoretical Economics 2024 →</a>
+              </figcaption>
+            </figure>
+            <figure class="blurb">
+              <blockquote>“I spent twenty years dissecting frogs, sketching flying machines, and studying fluid dynamics before delivering four paintings. Gretschko &amp; Rajko proved in the laboratory what the Duke of Milan screamed at me daily: humans systematically over-invest in acquiring costly information that has zero bearing on their final payoff. Frankly, I feel personally attacked.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Leonardo da Vinci</span>
+                <span class="blurb-bio">1452–1519 · Polymath, Renaissance procrastinator, chronic over-researcher</span>
+                <a href="#pub-ee2015">on “Excess Information Acquisition in Auctions” · Exp. Econ. 2015 →</a>
+              </figcaption>
+            </figure>
+            <figure class="blurb">
+              <blockquote>“Everyone in Vienna knew the Emperor rigged the court commissions for Mozart. Under the ‘imitation perfection’ rule of Mass, Fugger, Gretschko &amp; Wambach, any supplier can simply copy the favorite’s bid and legally force the buyer to treat them identically. Had Joseph II adopted this mechanism in 1781, we could have skipped the whole Amadeus drama.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Antonio Salieri</span>
+                <span class="blurb-bio">1750–1825 · Imperial Kapellmeister, victim of biased procurement</span>
+                <a href="#pub-aej2020">on “Imitation Perfection” · AEJ: Microeconomics 2020 →</a>
+              </figcaption>
+            </figure>
+            <figure class="blurb">
+              <blockquote>“Four years flat on my back painting wet plaster for a Pope who treated milestone payments as a theological suggestion. Gretschko &amp; Pollrich show how to structure multi-period procurement when contracts are incomplete and commitment is shaky. Had Pope Julius II used their mechanism, I might have thrown in the floor for free.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Michelangelo</span>
+                <span class="blurb-bio">1475–1564 · Sculptor, reluctant ceiling contractor</span>
+                <a href="#pub-ms2022">on “Incomplete Contracts in Multi-period Procurement” · Management Science 2022 →</a>
+              </figcaption>
+            </figure>
+            <figure class="blurb">
+              <blockquote>“When I proved electromagnetic waves existed, my students asked what they were good for. ‘Nothing, I guess,’ I told them. Little did I know governments would auction them off for billions while telecom executives used coded bids to quietly carve up the market. Bichler, Gretschko &amp; Janssen’s forensic autopsy of Germany’s 2015 spectrum auction is wireless communication at its finest.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Heinrich Hertz</span>
+                <span class="blurb-bio">1857–1894 · Physicist, accidental father of telecom consulting</span>
+                <a href="#pub-tp2017">on “Bargaining in Spectrum Auctions” · Telecom. Policy 2017 →</a>
+              </figcaption>
+            </figure>
+            <figure class="blurb">
+              <blockquote>“In Holland we sell tulips with a ticking clock that drops the price until someone panics and pushes the button. Gretschko &amp; Wambach calculate the exact moment a bidder should pause the clock to figure out what the painting is actually worth. I sold one canvas in my entire life for 400 francs. Clearly, my buyers’ information acquisition costs were too high.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Vincent van Gogh</span>
+                <span class="blurb-bio">1853–1890 · Post-Impressionist painter, victim of severe liquidity constraints</span>
+                <a href="#pub-et2014">on “Information Acquisition during a Descending Auction” · Econ. Theory 2014 →</a>
+              </figcaption>
+            </figure>
+            <figure class="blurb">
+              <blockquote>“Athens claimed my philosophical questioning generated negative externalities for the youth and imposed a rather permanent sanction. Riehm, Fugger, Gillen, Gretschko &amp; Werner measure in the field how social norms and peer punishment actually deter people from entering controversial markets. The hemlock, I maintain, was a corner solution.”</blockquote>
+              <figcaption>
+                <span class="blurb-who">Socrates</span>
+                <span class="blurb-bio">470–399 BC · Philosopher, public good provider, outlier in the dataset</span>
+                <a href="#pub-jpube2022">on “Social Norms, Sanctions, and Conditional Entry” · J. Public Econ. 2022 →</a>
+              </figcaption>
+            </figure>
+            <div class="blurb-nav">
+              <button class="btn" id="blurb-prev" type="button" aria-label="Previous posthumous endorsement">←</button>
+              <span id="blurb-count" aria-hidden="true">1/10</span>
+              <button class="btn" id="blurb-next" type="button" aria-label="Next posthumous endorsement">→</button>
+            </div>
+          </div>
+        </div>
+        <p class="disclaimer">Fictional quotes, real theorems—none of these people answered our referee requests in time. The portrait in the office changes by itself; the opinions do not.</p>
+      </section>
+
+      <!-- ============ TOWEL ============ -->
+      <section class="panel" id="towel" data-title="Embroidered wisdom" data-skin="linen">
+        <h2 class="ph">Embroidered wisdom</h2>
+        <canvas id="stitch" width="600" height="200" role="img" aria-label="Cross-stitch embroidery"></canvas>
+        <p id="stitch-caption"></p>
+        <ul id="towel-list">
+          <li data-by="(The rules make the difference.) The one takeaway I have been trying to sneak into every article since 2019.">Die Regeln machen den Unterschied.</li>
+          <li data-by="Stitched for the executive education seminar.">Splitting the difference is rarely a Nash equilibrium.</li>
+          <li data-by="From the experiment with procurement managers.">If you want a friendly chat, go to a bar. If you want low prices, hold an auction.</li>
+          <li data-by="Napoleon Bonaparte, on communication in procurement.">Sellers: never shut up.</li>
+          <li data-by="Socrates, on sanctions.">The hemlock was a corner solution.</li>
+          <li data-by="On refereeing.">Yes, I am usually Referee 2. The constructive version.</li>
+          <li data-by="On consulting inquiries.">Repeated games preferred.</li>
+          <li data-by="On leaving the ivory tower.">The math stays the same. The stakes have more zeros.</li>
+          <li data-by="On market failures.">Blaming greed is a lazy substitute for fixing the rules.</li>
+          <li data-by="On this website.">Zero cookies, zero trackers, strictly dominant privacy.</li>
+        </ul>
+        <p><button class="btn" id="towel-next" type="button">Next towel →</button></p>
+      </section>
+
+      <!-- ============ CV ============ -->
+      <section class="panel" id="cv" data-title="Filing cabinet: drawer “CV”">
+        <h2 class="ph">Curriculum vitae</h2>
+        <p class="lede">The unabridged version: every paper, grant, talk, and committee since 2002.</p>
+        <p><a class="btn" href="../Supporting%20Documents/CV.pdf" download>Download CV (PDF)</a></p>
+        <p class="fine">The other two drawers contain exam scripts and a 1994 warranty card for the monitor. For the short version, <a href="#about">read the diplomas</a>.</p>
+      </section>
+
+      <!-- ============ AI ============ -->
+      <section class="panel" id="ai" data-title="Robot: AI × economics">
+        <h2 class="ph">AI × economics</h2>
+        <p class="lede">BEEP. The robot on the bookshelf would like you to know that it plays dominant strategies. Mostly.</p>
+        <article class="card">
+          <p><span class="tag">In progress</span></p>
+          <h4>Large Language Models and Dominant Strategies</h4>
+          <p>with Jasmina Simon · Teaching silicon brains to play 80-year-old games, and figuring out why a trillion parameters still occasionally fall for the winner’s curse.</p>
+        </article>
+        <article class="card">
+          <h4>AI × Economics resource hub</h4>
+          <p>A curated guide to doing economic research with (and on) AI.</p>
+          <p><a href="../ai-econ-research/">Explore the AI × Economics resource hub →</a></p>
+        </article>
+        <article class="card">
+          <h4>Seminar: Experiments with Artificial Intelligence</h4>
+          <p class="meta">University of Münster · WS 2025/26 · <a href="#teaching">see the blackboard</a></p>
+        </article>
+      </section>
+
+      <!-- ============ EXIT ============ -->
+      <section class="panel" id="exit" data-title="Leave the office?">
+        <h2 class="ph">Other views of this homepage</h2>
+        <p>The door leads to the corridor, and the corridor leads to the same homepage in other outfits.</p>
+        <ul class="doors">
+          <li><a href="../simple/"><b>Straight up</b><span>Just the CV and the papers. Zero signaling, pure information.</span></a></li>
+          <li><a href="../fancy/"><b>Fancy schmancy</b><span>Four design themes, ⌘K, and the dead referees in high resolution.</span></a></li>
+          <li><a href="../?choose"><b>Back to the lobby</b><span>Choose your mechanism again.</span></a></li>
+        </ul>
+        <p class="fine"><a href="../impressum.html">Impressum &amp; Privacy</a> · <a href="https://github.com/vgretschko/vgretschko.github.io" target="_blank" rel="noopener">Source</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <span>© 2026 Vitali Gretschko</span>
+    <a href="../simple/">Straight up</a>
+    <a href="../fancy/">Fancy schmancy</a>
+    <a href="../?choose">Choose a view</a>
+    <a href="../impressum.html">Impressum &amp; Privacy</a>
+    <span>0 cookies · 0 trackers · 0 web fonts · 64,000 pixels</span>
+  </footer>
+
+  <dialog class="win" id="win" aria-labelledby="win-title">
+    <div class="win-frame">
+      <header class="win-bar">
+        <h2 id="win-title">Window</h2>
+        <button class="win-x" type="button" data-close aria-label="Close window">×</button>
+      </header>
+      <div class="win-body" id="win-body"></div>
+      <div class="win-foot">
+        <span>ESC closes · the furniture is the menu</span>
+        <button class="btn" type="button" data-close>Back to the office</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="office.js?v=1" defer></script>
+</body>
+
+</html>

@@ -32,11 +32,11 @@
       if (nav && nav.type === "back_forward") return;
       var v = null;
       try { v = localStorage.getItem("vg-view"); } catch (e) { }
-      if (v === "simple" || v === "fancy") l.replace(v + "/");
+      if (v === "simple" || v === "fancy" || v === "office") l.replace(v + "/");
     })();
   </script>
   <script type="speculationrules">
-    { "prefetch": [{ "source": "list", "urls": ["simple/", "fancy/"], "eagerness": "moderate" }] }
+    { "prefetch": [{ "source": "list", "urls": ["simple/", "fancy/", "office/"], "eagerness": "moderate" }] }
   </script>
 
   <script type="application/ld+json">
@@ -103,7 +103,7 @@
     main {
       flex: 1;
       width: 100%;
-      max-width: 940px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: clamp(36px, 8vh, 88px) 16px 28px;
       display: flex;
@@ -134,7 +134,7 @@
       color: var(--muted);
     }
 
-    .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .door {
       position: relative;
       display: flex;
@@ -192,6 +192,40 @@
       .door-fancy:hover::after, .door-fancy:focus-visible::after { animation: sheen 1.1s ease forwards; }
       @keyframes sheen { to { transform: translateX(120%); } }
     }
+    /* Old school: a 1994 business simulation, VGA and all */
+    .door-office {
+      color: #e8e4d6;
+      background:
+        repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0 1px, transparent 1px 3px),
+        linear-gradient(180deg, #1a2a7a 0 34px, #0b0b12 34px);
+      border-radius: 4px;
+      box-shadow: inset 2px 2px 0 #4a5cc0, inset -2px -2px 0 #05050a, 0 0 0 2px #000;
+      font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, "Courier New", monospace;
+    }
+    .door-office:hover { box-shadow: inset 2px 2px 0 #4a5cc0, inset -2px -2px 0 #05050a, 0 0 0 2px #000, 8px 8px 0 rgba(0, 0, 0, 0.45); }
+    .door-office .door-title {
+      margin-top: 30px;
+      font: 700 1.55rem/1.1 ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, "Courier New", monospace;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #ffe14a;
+      text-shadow: 3px 3px 0 #000;
+    }
+    .door-office .door-sub { color: #c9d0f4; font-size: 0.9rem; }
+    .door-office::before {
+      content: "CHAIR MANAGER \2019 94";
+      position: absolute;
+      top: 8px; left: 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #ffe14a;
+    }
+    .insert { margin-top: auto; padding-top: 14px; font-size: 0.85rem; letter-spacing: 0.06em; color: #59f07a; }
+    @media (prefers-reduced-motion: no-preference) {
+      .insert b { animation: blink 1.1s steps(2, jump-none) infinite; }
+      @keyframes blink { to { opacity: 0; } }
+    }
     @media (prefers-reduced-motion: reduce) {
       .door, .door:hover { transition: none; transform: none; }
     }
@@ -210,11 +244,16 @@
     footer a { text-underline-offset: 3px; }
     footer a:hover { color: var(--accent); }
 
+    @media (max-width: 900px) {
+      .doors { grid-template-columns: 1fr 1fr; }
+      .door-office { grid-column: 1 / -1; min-height: 0; }
+    }
     @media (max-width: 640px) {
       .doors { grid-template-columns: 1fr; gap: 14px; }
       .door { min-height: 0; padding: 22px 20px; }
       .door-title { font-size: 1.7rem; }
-      .mock, .sparks { display: none; }
+      .door-office .door-title { font-size: 1.4rem; }
+      .mock, .sparks, .insert { display: none; }
     }
   </style>
 </head>
@@ -242,6 +281,11 @@
         <span class="door-title">Fancy schmancy</span>
         <span class="door-sub">Four design themes, interactive toys, and ten dead celebrities reviewing my papers.</span>
         <span class="sparks" aria-hidden="true">✦ ✧ ✦</span>
+      </a>
+      <a class="door door-office" href="office/">
+        <span class="door-title">Old school</span>
+        <span class="door-sub">A 1994 business simulation in 320×200 pixels. The office is the menu: click the computer, the phone, the briefcase, or the portrait that talks back.</span>
+        <span class="insert" aria-hidden="true">C:\&gt; OFFICE.EXE <b>█</b></span>
       </a>
     </nav>
 
