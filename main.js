@@ -398,6 +398,7 @@
       ["Play the Prisoner’s Dilemma (test your morality)", "fun", function () { window.open("https://vgretschko.github.io/prisoners-dilemma-game/", "_blank", "noopener"); }],
       ["AI for economic research (58 curated tools & papers)", "link", function () { window.location.href = "/ai-econ-research/"; }],
       ["Straight up (just the facts, one page)", "link", function () { window.location.href = "/simple/"; }],
+      ["Old school (the 1994 pixel-art office)", "link", function () { window.location.href = "/office/"; }],
       ["Copy email address", "action", function () { copyText("vitali.gretschko@wiwi.uni-muenster.de", "Email address copied. Looking forward to your message."); }],
       ["Toggle dark / light mode", "action", function () { applyTheme(currentTheme() === "dark" ? "light" : "dark", true); }],
       ["Summon next historical endorsement", "fun", function () { if (blurbNextFn) blurbNextFn(); var b = doc.getElementById("blurbs"); if (b) b.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" }); }]

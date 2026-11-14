@@ -212,6 +212,11 @@ kbd {
   transition: border-color 0.15s ease, color 0.15s ease;
 }
 .view-btn:hover { border-color: var(--accent); color: var(--accent-strong); }
+.view-switch { display: inline-flex; }
+.view-switch .view-btn:first-child { border-radius: 999px 0 0 999px; }
+.view-switch .view-btn:last-child { border-radius: 0 999px 999px 0; margin-left: -1px; }
+.view-switch .view-btn:hover, .view-switch .view-btn:focus-visible { position: relative; z-index: 1; }
+.vb-short { display: none; }
 
 html[data-theme="dark"] .icon-sun { display: block; }
 html[data-theme="dark"] .icon-moon { display: none; }
@@ -1280,6 +1285,9 @@ html.js .reveal.visible { opacity: 1; transform: none; }
   .glance-inner { grid-template-columns: repeat(2, 1fr); }
   .hero-name { font-size: clamp(2.9rem, 13.5vw, 4rem); }
   .kbd-btn { display: none; }
+  .view-btn { padding: 0 9px; }
+  .vb-long { display: none; }
+  .vb-short { display: inline; }
   .site-head-inner { padding: 0 16px; gap: 10px; }
   .media-list li { grid-template-columns: 1fr; gap: 2px; }
   .timeline li { grid-template-columns: 1fr; gap: 4px; }
