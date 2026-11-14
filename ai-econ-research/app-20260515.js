@@ -8,7 +8,7 @@ const resources = [
     type: "Essay",
     audience: "All researchers",
     summary: "A clear map of where AI changes the economics research pipeline, from ideation to publishing.",
-    useful: "The best first read. It treats AI as leverage for research, not just automation.",
+    useful: "The best first read. Treats AI as cognitive leverage for serious researchers rather than an excuse to generate mediocre text faster.",
     tags: ["research pipeline", "economics", "workflow"]
   },
   {
@@ -20,7 +20,7 @@ const resources = [
     type: "Memo",
     audience: "PhD students and faculty",
     summary: "Scenario-based advice on how AI may change skill acquisition, research judgment, and economics careers.",
-    useful: "A starting point for asking what stays scarce once models get better at coding, writing, and proofs.",
+    useful: "Essential reading on comparative advantage: what human skills actually stay scarce once models can write the code, draft the intro, and prove Lemma 1?",
     tags: ["career", "judgment", "graduate students"]
   },
   {
@@ -80,7 +80,7 @@ const resources = [
     type: "Code starter",
     audience: "Empirical researchers",
     summary: "A container-based setup for using Claude Code in reproducible empirical research environments.",
-    useful: "The place to start if you want to try agentic coding without wrecking your machine setup.",
+    useful: "Start here if you want to unleash an autonomous coding agent on your data without accidentally rm -rf-ing your hard drive.",
     tags: ["Claude Code", "container", "reproducibility"]
   },
   {
@@ -116,7 +116,7 @@ const resources = [
     type: "Workflow",
     audience: "Applied economists",
     summary: "A field report on integrating Claude Code into causal inference and empirical research workflows.",
-    useful: "A firsthand account of how an economist's daily work changes with coding agents.",
+    useful: "An honest field report from an applied microeconomist who went from skeptic to power user.",
     tags: ["Claude Code", "causal inference", "workflow"]
   },
   {
@@ -236,7 +236,7 @@ const resources = [
     type: "Guide",
     audience: "Researchers and writers",
     summary: "Part of a Claude Code for economists series, focused on writing, analysis, and thought partnership.",
-    useful: "Worth reading if you think AI is only good for coding.",
+    useful: "Read this if you still think LLMs are only useful for debugging R scripts.",
     tags: ["writing", "thinking", "Claude"]
   },
   {
@@ -284,7 +284,7 @@ const resources = [
     type: "Essay",
     audience: "Empirical economists",
     summary: "Critiques automated policy evaluation workflows and argues that many lean heavily on diff-in-diff designs.",
-    useful: "A cautionary piece to read before evaluating AI-generated empirical papers.",
+    useful: "A healthy bucket of cold water explaining why letting an AI autonomously run 500 diff-in-diffs is not the same thing as doing economics.",
     tags: ["policy evaluation", "diff-in-diff", "APE"]
   },
   {
@@ -320,7 +320,7 @@ const resources = [
     type: "Paper",
     audience: "Researchers evaluating agents",
     summary: "Compares agentic AI systems with human economists on research-like tasks.",
-    useful: "Evidence on how well agents actually perform, for a discussion that goes beyond vibes.",
+    useful: "Actual empirical benchmarks on how coding agents perform against human economists, for conversations that need more than vibes.",
     tags: ["agent evaluation", "economists", "SSRN"]
   },
   {
@@ -332,7 +332,7 @@ const resources = [
     type: "Paper",
     audience: "Econometricians",
     summary: "A paper on AI-assisted empirical analysis and the need to formalize commitments in the research workflow.",
-    useful: "For discussing auditability, pre-analysis discipline, and code written by models.",
+    useful: "Because \"I asked Claude to run specifications until the p-value dropped below 0.05\" is not a valid identification strategy.",
     tags: ["econometrics", "analysis contract", "audit"]
   },
   {
@@ -368,7 +368,7 @@ const resources = [
     type: "Paper",
     audience: "Game theorists and market designers",
     summary: "Research on AI systems in negotiation settings.",
-    useful: "For anyone interested in strategic interaction between AI agents.",
+    useful: "Mandatory reading for market designers wondering what happens when the bidders in your auction are LLMs.",
     tags: ["negotiation", "agents", "game theory"]
   },
   {
@@ -380,7 +380,7 @@ const resources = [
     type: "Paper",
     audience: "Research leaders and editors",
     summary: "Analyzes how AI changes incentives in knowledge production, with a focus on quantity versus quality.",
-    useful: "The best academic paper here for discussing institutional responses rather than individual productivity.",
+    useful: "The sharpest institutional analysis of what happens to peer review when the marginal cost of generating a plausible-looking paper hits zero.",
     tags: ["incentives", "publishing", "quality"]
   },
   {
@@ -440,7 +440,7 @@ const resources = [
     type: "Essay",
     audience: "Social scientists",
     summary: "Argues that verification quality is a central bottleneck for social science in an AI-rich world.",
-    useful: "Asks the obvious next question: if research gets cheaper, who checks it?",
+    useful: "Poses the billion-dollar question: when generating research takes ten minutes, who is left to verify it?",
     tags: ["verification", "peer review", "science"]
   },
   {
@@ -500,7 +500,7 @@ const resources = [
     type: "Code starter",
     audience: "Economists and reviewers",
     summary: "A reproducible multi-agent reviewer for academic economics papers, with preprocessing, reviewer prompts, validation, normalization, and editor report assembly.",
-    useful: "For when you want a local review pipeline you can inspect, instead of a hosted tool.",
+    useful: "A local, multi-agent referee pipeline that roasts your working paper in private so Referee 2 doesn't have to do it in public.",
     tags: ["paper review", "multi-agent", "economics"]
   },
   {
@@ -512,7 +512,7 @@ const resources = [
     type: "Tool",
     audience: "Authors and editors",
     summary: "A tool for checking whether references are real and traceable through Crossref.",
-    useful: "A safeguard against hallucinated or malformed references.",
+    useful: "Catches hallucinated citations before a journal editor notices you cited a 2021 Econometrica paper that only exists in ChatGPT’s imagination.",
     tags: ["references", "hallucination", "Crossref"]
   },
   {
@@ -536,7 +536,7 @@ const resources = [
     type: "Essay",
     audience: "Mathematicians and theorists",
     summary: "A detailed account of ChatGPT producing a substantial mathematical improvement in additive combinatorics.",
-    useful: "A case where AI reasoning starts to look like original research.",
+    useful: "A Fields Medalist documents the uncomfortable moment an LLM stopped regurgitating textbook proofs and actually had a good mathematical idea.",
     tags: ["mathematics", "proofs", "ChatGPT"]
   },
   {
@@ -668,7 +668,7 @@ const resources = [
     type: "Paper",
     audience: "Researchers using LLMs for exploration",
     summary: "An arXiv paper proposing a decoding scheme for keeping LLM outputs diverse and creative across long exploratory search tasks.",
-    useful: "For research ideation, when you want to explore many non-obvious alternatives instead of one conventional answer.",
+    useful: "How to stop language models from giving you the median, mildly boring answer when brainstorming research ideas.",
     tags: ["creativity", "exploratory search", "LLMs"]
   },
   {
@@ -762,7 +762,7 @@ function render() {
   els.count.textContent = `${filtered.length} of ${resources.length} resources shown`;
 
   if (!filtered.length) {
-    els.resources.innerHTML = `<div class="empty">No resources match those filters. Try clearing one filter or searching a broader term.</div>`;
+    els.resources.innerHTML = `<div class="empty">Zero resources match those filters. Even an LLM wouldn't hallucinate a link here—try clearing a filter.</div>`;
     return;
   }
 

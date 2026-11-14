@@ -1138,6 +1138,7 @@ html.js .blurb.active {
   color: var(--muted);
   flex-shrink: 0;
 }
+.palette-item > span:first-child { min-width: 0; overflow-wrap: anywhere; }
 .palette-item.sel { background: var(--accent-soft); color: var(--ink); }
 .palette-item.sel .pi-kind { color: var(--accent-strong); }
 
@@ -1145,6 +1146,7 @@ html.js .blurb.active {
 
 .palette-foot {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 14px;
   padding: 10px 18px;
@@ -1158,6 +1160,9 @@ html.js .blurb.active {
 .toast {
   position: fixed;
   left: 50%;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  text-align: center;
   bottom: 28px;
   transform: translate(-50%, 20px);
   z-index: 400;
@@ -1545,7 +1550,7 @@ html[data-skin="terminal"] ::selection { background: var(--accent); color: var(-
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  width: 252px;
+  width: min(320px, calc(100vw - 64px));
   background: var(--bg-elev);
   border: 1px solid var(--line-strong);
   border-radius: 13px;
@@ -1584,7 +1589,9 @@ html[data-skin="terminal"] ::selection { background: var(--accent); color: var(-
   margin-left: auto;
   color: var(--accent-strong);
   font-weight: 700;
+  flex-shrink: 0;
 }
+.skin-opt > span:last-child { min-width: 0; flex: 1; }
 .skin-opt small { display: block; font-size: 0.72rem; font-weight: 400; color: var(--muted); }
 
 .skin-dot {

@@ -40,10 +40,10 @@
 
   /* ---------------- Skins (design switcher) ---------------- */
   var SKINS = [
-    { id: "corten", label: "Corten (warm paper & rust)" },
-    { id: "blackboard", label: "Blackboard (chalk on slate)" },
-    { id: "swiss", label: "Swiss (modernist grid)" },
-    { id: "terminal", label: "Terminal (phosphor & mono)" }
+    { id: "corten", label: "Corten · warm paper & rust (for reading working papers with an espresso)" },
+    { id: "blackboard", label: "Blackboard · chalk on slate (backward induction sold separately)" },
+    { id: "swiss", label: "Swiss · modernist grid (strictly pareto-efficient typography)" },
+    { id: "terminal", label: "Terminal · phosphor & mono (for pretending it’s 1984 and you’re compiling Fortran)" }
   ];
   var skinBtn = doc.getElementById("skin-btn");
   var skinMenu = doc.getElementById("skin-menu");
@@ -198,7 +198,7 @@
     ta.style.opacity = "0";
     doc.body.appendChild(ta);
     ta.select();
-    try { doc.execCommand("copy"); toast(okMsg); } catch (e) { toast("Copy failed, sorry"); }
+    try { doc.execCommand("copy"); toast(okMsg); } catch (e) { toast("Copy failed—your browser defected."); }
     doc.body.removeChild(ta);
   }
 
@@ -206,7 +206,7 @@
     var btn = ev.target.closest(".bib-btn");
     if (!btn) return;
     var key = btn.getAttribute("data-bib");
-    if (BIB[key]) copyText(BIB[key], "BibTeX copied to clipboard");
+    if (BIB[key]) copyText(BIB[key], "BibTeX copied to clipboard. Cite responsibly.");
   });
 
   /* ---------------- Publications: filter + search ---------------- */
@@ -370,6 +370,22 @@
         }
       });
     });
+    // Historical endorsements are searchable by name, as promised by the input hint.
+    if (blurbStage) {
+      blurbs.forEach(function (el, i) {
+        var who = el.querySelector(".blurb-who");
+        if (!who) return;
+        commands.push({
+          label: who.textContent.trim() + ": posthumous endorsement", kind: "fun",
+          run: function () {
+            showBlurb(i);
+            stopBlurbs();
+            startBlurbs();
+            blurbWrap.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" });
+          }
+        });
+      });
+    }
     // links & actions
     [
       ["Download CV (PDF)", "file", function () { window.location.href = "/Supporting%20Documents/CV.pdf"; }],
@@ -379,12 +395,12 @@
       ["LinkedIn", "link", function () { window.open("https://www.linkedin.com/in/vitali-gretschko/", "_blank", "noopener"); }],
       ["GitHub (vgretschko)", "link", function () { window.open("https://github.com/vgretschko", "_blank", "noopener"); }],
       ["University profile (Münster)", "link", function () { window.open("https://www.wiwi.uni-muenster.de/sumade/en/team/vitali-gretschko", "_blank", "noopener"); }],
-      ["Play the Prisoner's Dilemma", "fun", function () { window.open("https://vgretschko.github.io/prisoners-dilemma-game/", "_blank", "noopener"); }],
-      ["AI for economic research (resource guide)", "link", function () { window.location.href = "/ai-econ-research/"; }],
-      ["Straight up (one page, no frills)", "link", function () { window.location.href = "/simple/"; }],
-      ["Copy email address", "action", function () { copyText("vitali.gretschko@wiwi.uni-muenster.de", "Email address copied"); }],
+      ["Play the Prisoner’s Dilemma (test your morality)", "fun", function () { window.open("https://vgretschko.github.io/prisoners-dilemma-game/", "_blank", "noopener"); }],
+      ["AI for economic research (58 curated tools & papers)", "link", function () { window.location.href = "/ai-econ-research/"; }],
+      ["Straight up (just the facts, one page)", "link", function () { window.location.href = "/simple/"; }],
+      ["Copy email address", "action", function () { copyText("vitali.gretschko@wiwi.uni-muenster.de", "Email address copied. Looking forward to your message."); }],
       ["Toggle dark / light mode", "action", function () { applyTheme(currentTheme() === "dark" ? "light" : "dark", true); }],
-      ["Next endorsement from beyond the grave", "fun", function () { if (blurbNextFn) blurbNextFn(); var b = doc.getElementById("blurbs"); if (b) b.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" }); }]
+      ["Summon next historical endorsement", "fun", function () { if (blurbNextFn) blurbNextFn(); var b = doc.getElementById("blurbs"); if (b) b.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" }); }]
     ].forEach(function (c) {
       commands.push({ label: c[0], kind: c[1], run: c[2] });
     });
@@ -425,7 +441,7 @@
     if (!filtered.length) {
       var li = doc.createElement("li");
       li.className = "palette-empty";
-      li.textContent = "No matches.";
+      li.textContent = "No equilibrium found for that search term.";
       paletteList.appendChild(li);
       return;
     }
